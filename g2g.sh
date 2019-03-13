@@ -19,8 +19,10 @@ do
     HUE=$((100*i*NROT/NUM))
     N=`printf %03d $i`
     #echo $DIR/__spin-pw_$N.png
+    echo $SFILE
     #convert $SFILE -shave 80 $SFILE
-    convert $SFILE -modulate 100,100,$HUE $DIR/$SOURCE/__frame_$N.png
+    # convert $SFILE -modulate 100,100,$HUE $DIR/$SOURCE/__frame_$N.png
+    cp $SFILE $DIR/$SOURCE/__frame_$N.png
 done
 
-convert -delay 8 -loop 0 $DIR/$SOURCE/*.png party-$SOURCE.gif
+convert -delay 8 -loop 0 $DIR/$SOURCE/*.png spin-$SOURCE.gif
