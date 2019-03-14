@@ -3,30 +3,30 @@ if [[ $# -eq 0 ]] ; then
     exit 0
 fi
 
-ROOT=".cache"
+ROOT="dist"
 
-filename=$(basename -- "$1")
-extension="${filename##*.}"
-filename="${filename%.*}"
+FILENAME=$(basename -- "$1")
+EXT="${FILENAME##*.}"
+FILENAME="${FILENAME%.*}"
 shift
 
-nframes=12
-hue_rate=6
-delay=10
+N_FRAMES=12
+HUE_RATE=6
+DELAY=10
 
 while [ "$1" != "" ]; do
     case $1 in
         -n | --number )
             shift
-            nframes=$1
+            N_FRAMES=$1
             ;;
         -h | --hue-rate )
             shift
-            hue_rate=$1
+            HUE_RATE=$1
             ;;
         -d | --delay )
             shift
-            delay=$1
+            DELAY=$1
             ;;
         -i | --interactive )
             interactive=1
@@ -36,12 +36,14 @@ while [ "$1" != "" ]; do
             ;;
         -b | --brighten )
             shift
-            brighten=$1
+            BRIGHTEN=$1
             ;;
         --negate )
             shift
-            negate=$1
+            NEGATE=$1
             ;;
+        -g | --gif)
+            SOURCE_IS_GIF=1
         # -h | --help )
         #     usage
         #     exit
@@ -59,59 +61,48 @@ if [ "$clear" = "1" ]
        mkdir $ROOT
 fi
 
-function _done () {
-    cat $html_file
-    python -m SimpleHTTPServer 8756
-    exit
-}
-
 function _new_dir () {
-    _h4 $1
-    $DIR=$ROOT/$filename$/$1
-    export SOURCE=$DIR/$filename.$extension
+    DIR="$ROOT/$FILENAME/$1"
+    mkdir -p $DIR
+    export SOURCE_2="$DIR/$FILENAME.$EXT"
 }
 
-function _h4 () {
-    echo "</div><div><h4>$1</h4>" >> "$html_file"
-}
+rm -rf $ROOT/$FILENAME
+mkdir -p $ROOT/$FILENAME
 
-function _img () {
-    echo "<img title='$1' src='../$1'/>" >> "$html_file"
-}
+_new_dir 00-source
+cp $FILENAME.$EXT $DIR
+SOURCE="$DIR/$FILENAME.$EXT"
 
-mkdir -p $ROOT/$filename
-rm -f $ROOT/$filename/*
-
-html_file="$ROOT/$filename.html"
-echo "<div style='display:flex;justify-content: space-between'><div>" >  $html_file
-
-SOURCE="$ROOT/$filename.$extension"
-cp $filename.$extension $SOURCE
-_h4 $SOURCE
-_img $SOURCE
-
-if [ ! -z "$brighten" ]
+if [ ! -z "$BRIGHTEN" ]
    then
-       SOURCE_2=`_new_dir brighten`
-       convert $SOURCE -modulate $brighten% $SOURCE_2
+       _new_dir 02-brighten
+       convert $SOURCE -modulate $BRIGHTEN% $SOURCE_2
        SOURCE=$SOURCE_2
        echo "brightened image"
-       _img $SOURCE
 fi
 
-if [ ! -z "$negate" ]
+if [ ! -z "$NEGATE" ]
    then
-       convert $SOURCE -channel $negate -negate $SOURCE
+       _new_dir 02-negate
+       convert $SOURCE -channel $NEGATE -negate $SOURCE_2
+       SOURCE=$SOURCE_2
        echo "negated image"
 fi
 
-for i in `seq $nframes`
+_new_dir 03-hue_rotate
+for i in `seq $N_FRAMES`
 do
-    HUE=$((200*i/$hue_rate))
+    HUE=$((200*i/$HUE_RATE))
     N=`printf %03d $i`
-    convert $SOURCE -modulate 100,100,$HUE $ROOT/$filename/$N.png
+    convert $SOURCE -modulate 100,100,$HUE $DIR/$N.png
 done
 
-convert -delay $delay -loop 0 $ROOT/$filename/*.png party-$filename.gif
-_done
+convert -delay $DELAY -loop 0 $DIR/*.png $ROOT/$FILENAME/party.gif
+
+cd $ROOT
+echo */ > gifs.log
+cd $FILENAME
+find . -type f -print |grep -v /files.log > files.log
+echo */ > directories.log
 
