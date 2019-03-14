@@ -1,0 +1,1 @@
+bash gifit.sh  gh.png -n 24 -h 24 -d 2 --negate green
