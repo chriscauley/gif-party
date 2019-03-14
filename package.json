@@ -1,0 +1,16 @@
+{
+  "name": "party-gif",
+  "version": "1.0.0",
+  "main": "index.html",
+  "author": "chriscauley <chris@lablackey.com>",
+  "license": "MIT",
+  "dependencies": {
+    "parcel-plugin-riot": "https://github.com/chriscauley/parcel-plugin-riot.git",
+    "riot": "^3.13.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "babel-eslint": "^10.0.1"
+  }
+}
