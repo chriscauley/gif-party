@@ -22,6 +22,7 @@ this.on('update',() => {
 const loadData = ([directories,files]) => {
   const dir_map = {}
   directories.forEach(d => dir_map[d] = [])
+  files.sort()
   files.forEach(f => {
     const d = f.split('/')[0] + "/"
     if (!dir_map[d]) { return }
@@ -33,6 +34,5 @@ const loadData = ([directories,files]) => {
   }))
   this.update()
 }
-
 </script>
 </gif-detail>

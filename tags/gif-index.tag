@@ -21,5 +21,6 @@ this.on("update",() => {
     this.target = undefined
   }
 })
+window.addEventListener("hashchange",e=>this.update())
 </script>
 </gif-index>

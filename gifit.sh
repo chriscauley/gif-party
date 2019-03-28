@@ -5,24 +5,27 @@ fi
 
 ROOT="dist"
 
+OG_SOURCE=$1
 FILENAME=$(basename -- "$1")
 EXT="${FILENAME##*.}"
 FILENAME="${FILENAME%.*}"
 shift
 
-N_FRAMES=12
-HUE_RATE=6
-DELAY=10
+N_FRAMES=24
+DELAY=2
 
 while [ "$1" != "" ]; do
     case $1 in
+        -r | --resize )
+            shift
+            RESIZE=$1
+            ;;
         -n | --number )
             shift
             N_FRAMES=$1
             ;;
         -h | --hue-rate )
-            shift
-            HUE_RATE=$1
+            HUE_RATE=$N_FRAMES
             ;;
         -d | --delay )
             shift
@@ -30,9 +33,6 @@ while [ "$1" != "" ]; do
             ;;
         -i | --interactive )
             interactive=1
-            ;;
-        -c | --clear )
-            clear=1
             ;;
         -b | --brighten )
             shift
@@ -43,7 +43,7 @@ while [ "$1" != "" ]; do
             NEGATE=$1
             ;;
         -g | --gif)
-            SOURCE_IS_GIF=1
+            GIF_SPLIT=1
         # -h | --help )
         #     usage
         #     exit
@@ -53,13 +53,6 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
-
-if [ "$clear" = "1" ]
-   then
-       echo "cleared cache directory"
-       rm -rf $ROOT
-       mkdir $ROOT
-fi
 
 function _new_dir () {
     DIR="$ROOT/$FILENAME/$1"
@@ -71,34 +64,63 @@ rm -rf $ROOT/$FILENAME
 mkdir -p $ROOT/$FILENAME
 
 _new_dir 00-source
-cp $FILENAME.$EXT $DIR
+cp $OG_SOURCE $DIR
 SOURCE="$DIR/$FILENAME.$EXT"
+echo $DIR
+if [ ! -z "$GIF_SPLIT" ]
+then
+    _new_dir 10-gif_split
+    convert $SOURCE $DIR/$FILENAME-%02d.png
+    GIF_DIR=$DIR
+fi
 
-if [ ! -z "$BRIGHTEN" ]
-   then
-       _new_dir 02-brighten
-       convert $SOURCE -modulate $BRIGHTEN% $SOURCE_2
-       SOURCE=$SOURCE_2
-       echo "brightened image"
+if [ ! -z "$RESIZE" ]
+then
+    _new_dir 20-resize
+    convert $SOURCE -resize $RESIZE $SOURCE_2
+    SOURCE=$SOURCE_2
+    echo resized
 fi
 
 if [ ! -z "$NEGATE" ]
    then
-       _new_dir 02-negate
+       _new_dir 30-negate
        convert $SOURCE -channel $NEGATE -negate $SOURCE_2
        SOURCE=$SOURCE_2
        echo "negated image"
 fi
 
-_new_dir 03-hue_rotate
-for i in `seq $N_FRAMES`
-do
-    HUE=$((200*i/$HUE_RATE))
-    N=`printf %03d $i`
-    convert $SOURCE -modulate 100,100,$HUE $DIR/$N.png
-done
+if [ ! -z "$BRIGHTEN" ]
+   then
+       _new_dir 40-brighten
+       convert $SOURCE -modulate $BRIGHTEN% $SOURCE_2
+       SOURCE=$SOURCE_2
+       echo "brightened image"
+fi
 
-convert -delay $DELAY -loop 0 $DIR/*.png $ROOT/$FILENAME/party.gif
+if [ ! -z "$GIF_SPLIT" ]
+then
+    set -- `ls $GIF_DIR`
+fi
+if [ ! -z "$HUE_RATE" ]
+then
+    _new_dir 50-hue_rotate
+    for i in `seq $N_FRAMES`
+    do
+        HUE=$((200*i/$HUE_RATE))
+        N=`printf %03d $i`
+        S=$SOURCE
+        if [ ! -z "$GIF_SPLIT" ]
+        then
+            S=$GIF_DIR/$1
+            shift
+        fi
+        convert $S -modulate 100,100,$HUE $DIR/$N-$HUE.png
+    done
+fi
+
+echo $DELAY
+convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $ROOT/$FILENAME/party.gif
 
 cd $ROOT
 echo */ > gifs.log
