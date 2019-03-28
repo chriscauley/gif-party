@@ -4,8 +4,13 @@
   "main": "index.html",
   "author": "chriscauley <chris@lablackey.com>",
   "license": "MIT",
+  "scripts": {
+    "client": "parcel client/index.html",
+    "test": "./bin/test"
+  },
   "dependencies": {
-    "parcel-plugin-riot": "https://github.com/chriscauley/parcel-plugin-riot.git",
+    "parcel": "^1.12.3",
+    "parcel-plugin-riot": "^2.1.0",
     "riot": "^3.13.2"
   },
   "devDependencies": {

@@ -9,6 +9,5 @@
 #bash gifit.sh imgs/waveboye.gif -g --negate green -h
 #bash gifit.sh imgs/coolrabbit.png --negate green -h
 #bash gifit.sh imgs/party-blob.gif -g
-#bash gifit.sh imgs/ohno.png --resize 64 -n 12 -h
-bash gifit.sh imgs/neg-ohno.png --negate green --resize 64 -n 12 -h
+bash gifit.sh imgs/ohno.png --resize 64 -n 12 -h
 #bash gifit.sh imgs/party-ohno.gif -g -n12 -h
