@@ -1,3 +1,5 @@
+import uR from 'unrest.io'
+
 import fatch from './fatch'
 
 <gif-index>
@@ -11,6 +13,7 @@ import fatch from './fatch'
 <script>
 this.gifs = []
 const setGifs = (gifs) => {
+  uR.storage.set("image-choices",gifs)
   this.gifs = gifs
   this.update()
 }
