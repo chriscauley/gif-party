@@ -14,7 +14,7 @@ import fatch from './fatch'
 this.gifs = []
 const setGifs = (gifs) => {
   uR.storage.set("image-choices",gifs)
-  this.gifs = gifs
+//this.gifs = gifs
   this.update()
 }
 fatch('gifs.log').then(setGifs)

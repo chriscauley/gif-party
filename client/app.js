@@ -3,7 +3,8 @@ import uR from 'unrest.io'
 
 import "./tags/gif-index"
 import "./tags/gif-detail"
+import "./models"
 
-uR.auth.enabled = false
-window.riot = riot
-riot.mount("gif-index")
+uR.ready(() => {
+  uR.admin.start()
+})
