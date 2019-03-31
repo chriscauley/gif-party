@@ -1,4 +1,14 @@
+# node related
 .cache
 dist
 node_modules
+
+# django related
+.venv
+.media
+.static
+__pycache__
+
+# misc
 trash
+.DS_Store
