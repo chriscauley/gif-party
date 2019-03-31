@@ -5,9 +5,15 @@
   "author": "chriscauley <chris@lablackey.com>",
   "license": "MIT",
   "scripts": {
-    "client": "parcel client/index.html -p 8596 --public-url /static/"
+    "client": "parcel client/index.html -p 8596 --public-url /static/",
+    "lint": "eslint client/**/*.js"
   },
   "dependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-riot": "^0.1.8",
     "parcel": "^1.12.3",
     "parcel-plugin-riot": "^2.1.0",
     "riot": "^3.13.2"
@@ -15,7 +21,8 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "babel-eslint": "^10.0.1"
+    "babel-eslint": "^10.0.1",
+    "prettier": "^1.16.4"
   },
   "babel": {
     "plugins": [
