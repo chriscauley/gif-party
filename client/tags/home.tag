@@ -2,7 +2,8 @@ import uR from 'unrest.io'
 
 import fatch from './fatch'
 
-<gif-index>
+<gtfo-home>
+  <h2 class="flexy">Gif Tha Funk Out!</h2>
   <div class="flexy">
     <a href="#{gif}" each={ gif in gifs}>
       <img src="{gif}party.gif" />
@@ -26,4 +27,4 @@ this.on("update",() => {
 })
 window.addEventListener("hashchange",e=>this.update())
 </script>
-</gif-index>
+</gtfo-home>
