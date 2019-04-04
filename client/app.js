@@ -5,6 +5,12 @@ import './routes'
 import './tags'
 import './models'
 
+uR.element.create(
+  "gtfo-nav",
+  {parent: "#nav"},
+  {}
+)
+
 uR.ready(() => {
   uR.admin.start()
 })

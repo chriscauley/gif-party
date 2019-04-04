@@ -1,9 +1,14 @@
 import uR from 'unrest.io'
 
 <gtfo-new>
-  <div each={image in images}>
-    <img src={image.src} />
-    <div>{image.name}</div>
+  <h2 class="flexy">What image do you want to party?</h2>
+  <div class="images">
+    <div each={image in images} class="card">
+      <div class="card-body">
+        <div class="image"><img src={image.src} /></div>
+        <div>{image.name}</div>
+      </div>
+    </div>
   </div>
 <script>
   this.on("mount", () => this.update())

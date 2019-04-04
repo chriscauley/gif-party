@@ -32,6 +32,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-riot": "^0.1.8",
+    "less": "^3.9.0",
     "prettier": "^1.16.4"
   },
   "babel": {

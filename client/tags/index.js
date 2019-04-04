@@ -1,3 +1,4 @@
-import "./new"
-import "./gif-detail"
-import "./gif-index"
+import './new'
+import './nav'
+import './gif-detail'
+import './gif-index'
