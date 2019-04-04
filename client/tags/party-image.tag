@@ -14,6 +14,8 @@ import uR from 'unrest.io'
     this.source = this.party.source
   })
   refresh() {
-    console.log(this.party.id)
+    uR.ajax({
+      url: `/api/refresh/${this.party.id}/`
+    })
   }
 </gtfo-party-image>

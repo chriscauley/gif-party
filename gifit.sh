@@ -38,7 +38,7 @@ while [ "$1" != "" ]; do
             shift
             BRIGHTEN=$1
             ;;
-        --negate )
+        -N | --negate )
             shift
             NEGATE=$1
             ;;
