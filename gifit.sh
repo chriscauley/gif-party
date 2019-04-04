@@ -7,13 +7,10 @@ OG_SOURCE=$1
 FILENAME=$(basename -- "$1")
 EXT="${FILENAME##*.}"
 FILENAME="${FILENAME%.*}"
-ROOT=".media/.party/"
-DEST="$ROOT/$FILENAME.$EXT/$2"
+ROOT=`realpath .media/.party/`
+DEST=`realpath $ROOT/$FILENAME.$EXT/$2`
 shift
 shift
-
-echo $DEST
-
 
 N_FRAMES=24
 DELAY=2
@@ -59,18 +56,17 @@ while [ "$1" != "" ]; do
 done
 
 function _new_dir () {
-    DIR="$DEST/$FILENAME/$1"
+    DIR="$DEST/$1"
     mkdir -p $DIR
     export SOURCE_2="$DIR/$FILENAME.$EXT"
 }
 
-rm -rf $DEST/$FILENAME
-mkdir -p $DEST/$FILENAME
+rm -rf $DEST
+mkdir -p $DEST
 
 _new_dir 00-source
 cp $OG_SOURCE $DIR
 SOURCE="$DIR/$FILENAME.$EXT"
-echo $DIR
 if [ ! -z "$GIF_SPLIT" ]
 then
     _new_dir 10-gif_split
@@ -83,7 +79,7 @@ then
     _new_dir 20-resize
     convert $SOURCE -resize $RESIZE $SOURCE_2
     SOURCE=$SOURCE_2
-    echo resized
+    echo resized $RESIZE
 fi
 
 if [ ! -z "$NEGATE" ]
@@ -91,7 +87,7 @@ if [ ! -z "$NEGATE" ]
        _new_dir 30-negate
        convert $SOURCE -channel $NEGATE -negate $SOURCE_2
        SOURCE=$SOURCE_2
-       echo "negated image"
+       echo negated $NEGATE
 fi
 
 if [ ! -z "$BRIGHTEN" ]
@@ -99,7 +95,7 @@ if [ ! -z "$BRIGHTEN" ]
        _new_dir 40-brighten
        convert $SOURCE -modulate $BRIGHTEN% $SOURCE_2
        SOURCE=$SOURCE_2
-       echo "brightened image"
+       echo brigtened $BRIGHTEN
 fi
 
 if [ ! -z "$GIF_SPLIT" ]
@@ -123,12 +119,11 @@ then
     done
 fi
 
-echo $DELAY
-convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $DEST/$FILENAME/party.gif
-
+echo delaying gif - $DELAY
+convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $DEST/party.gif
+echo $DIR
 cd $ROOT
 echo */ > gifs.log
-cd $FILENAME
 find . -type f -print |grep -v /files.log > files.log
 echo */ > directories.log
 
