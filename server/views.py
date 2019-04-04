@@ -11,10 +11,8 @@ def sourceimage_list(request):
     })
 
 def partyimage_api(request,*args):
-    print("in it!")
     data = json.loads(request.body.decode('utf-8') or "{}")
     if request.method == "POST":
-        print("post!")
         form = PartyImageForm(data)
         if not form.is_valid():
             raise NotImplemented("Bad data")

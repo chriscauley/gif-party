@@ -35,13 +35,13 @@ class PartyImage(JsonModel):
         return super(PartyImage,self).save(*args,**kwargs)
 
     def refresh(self):
-        print(self.short_args,self.args)
         args = ['bash','gifit.sh', self.sourceimage.src.path,self.short_args]
         args += self.args
         process = Popen(args, stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
         print(stdout.decode("utf-8"))
-        print(stderr)
+        if stderr:
+            print(stderr.decode("utf-8"))
 
 
     @property
@@ -53,6 +53,8 @@ class PartyImage(JsonModel):
             args += ['-N',self.data['negate']]
         if self.data.get('n_frames'):
             args += ['-n',self.data['n_frames']]
+        if self.data.get('hue_rotate'):
+            args += ['-h']
         args = [str(arg) for arg in args]
         return args
 
