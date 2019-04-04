@@ -7,7 +7,9 @@ OG_SOURCE=$1
 FILENAME=$(basename -- "$1")
 EXT="${FILENAME##*.}"
 FILENAME="${FILENAME%.*}"
+mkdir -p .media/.party/
 ROOT=`realpath .media/.party/`
+mkdir -p $ROOT/$FILENAME.$EXT/$2
 DEST=`realpath $ROOT/$FILENAME.$EXT/$2`
 shift
 shift
