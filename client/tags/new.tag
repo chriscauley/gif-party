@@ -3,12 +3,12 @@ import uR from 'unrest.io'
 <gtfo-new>
   <h2 class="flexy">What image do you want to party?</h2>
   <div class="images">
-    <div each={image in images} class="card">
+    <a href="#/image/new/{image.id}/" each={image in images} class="card">
       <div class="card-body">
         <div class="image"><img src={image.src} /></div>
-        <div>{image.name}</div>
+        <div class="text-center">{image.name}</div>
       </div>
-    </div>
+    </a>
   </div>
 <script>
   this.on("mount", () => this.update())
