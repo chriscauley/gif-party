@@ -3,13 +3,17 @@ if [[ $# -eq 0 ]] ; then
     exit 0
 fi
 
-ROOT="dist"
-
 OG_SOURCE=$1
 FILENAME=$(basename -- "$1")
 EXT="${FILENAME##*.}"
 FILENAME="${FILENAME%.*}"
+ROOT=".media/.party/"
+DEST="$ROOT/$FILENAME.$EXT/$2"
 shift
+shift
+
+echo $DEST
+
 
 N_FRAMES=24
 DELAY=2
@@ -55,13 +59,13 @@ while [ "$1" != "" ]; do
 done
 
 function _new_dir () {
-    DIR="$ROOT/$FILENAME/$1"
+    DIR="$DEST/$FILENAME/$1"
     mkdir -p $DIR
     export SOURCE_2="$DIR/$FILENAME.$EXT"
 }
 
-rm -rf $ROOT/$FILENAME
-mkdir -p $ROOT/$FILENAME
+rm -rf $DEST/$FILENAME
+mkdir -p $DEST/$FILENAME
 
 _new_dir 00-source
 cp $OG_SOURCE $DIR
@@ -120,7 +124,7 @@ then
 fi
 
 echo $DELAY
-convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $ROOT/$FILENAME/party.gif
+convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $DEST/$FILENAME/party.gif
 
 cd $ROOT
 echo */ > gifs.log
