@@ -15,7 +15,12 @@ class AbstractModel(JsonModel):
 
 
 class PartyImage(JsonModel):
-    pass
+    @property
+    def as_json(self):
+        return {
+            **self.data,
+            'id': self.id,
+        }
 
 
 class SourceImage(models.Model):
