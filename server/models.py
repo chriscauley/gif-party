@@ -1,7 +1,8 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from unrest.models import JsonModel
+from subprocess import Popen, PIPE
 
+from unrest.models import JsonModel
 
 class AbstractModel(JsonModel):
     class Meta:
@@ -35,6 +36,13 @@ class PartyImage(JsonModel):
 
     def refresh(self):
         print(self.short_args,self.args)
+        args = ['bash','gifit.sh', self.sourceimage.src.path,self.short_args]
+        args += self.args
+        process = Popen(args, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = process.communicate()
+        print(stdout.decode("utf-8"))
+        print(stderr)
+
 
     @property
     def args(self):
@@ -45,11 +53,12 @@ class PartyImage(JsonModel):
             args += ['-N',self.data['negate']]
         if self.data.get('n_frames'):
             args += ['-n',self.data['n_frames']]
+        args = [str(arg) for arg in args]
         return args
 
     @property
     def short_args(self):
-        return "".join([str(arg) for arg in self.args])
+        return "".join(self.args)
 
 
 class SourceImage(models.Model):
