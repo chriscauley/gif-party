@@ -4,6 +4,7 @@ import uR from 'unrest.io'
 import './routes'
 import './tags'
 import './models'
+import fatch from './tags/fatch'
 
 uR.element.create(
   "gtfo-nav",
@@ -11,6 +12,7 @@ uR.element.create(
   {}
 )
 
+fatch()
+
 uR.ready(() => {
-  uR.admin.start()
 })

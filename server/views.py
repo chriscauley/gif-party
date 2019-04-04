@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 
 from server.forms import PartyImageForm
-from server.models import SourceImage, PartyImage
+from server.models import SourceImage, get_args, get_short_args, partify
 from unrest.views import superuser_api_view
 import json
 
@@ -10,15 +10,16 @@ def sourceimage_list(request):
       'results': [si.as_json for si in SourceImage.objects.all()]
     })
 
-def partyimage_api(request,*args):
+def party(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
-    if request.method == "POST":
-        form = PartyImageForm(data)
-        if not form.is_valid():
-            raise NotImplemented("Bad data")
-    return superuser_api_view(request,*args)
-
-def refresh_party(request,_id):
-    partyimage = PartyImage.objects.get(id=_id)
-    partyimage.refresh()
-    return JsonResponse({})
+    form = PartyImageForm(data)
+    if not form.is_valid():
+        raise NotImplemented("Bad data")
+    data = form.cleaned_data
+    src_path = data['source'].src.path
+    args = get_args(data)
+    short_args = get_short_args(data)
+    partify(src_path,data)
+    return JsonResponse({
+        'code': short_args,
+    })

@@ -1,6 +1,6 @@
 import uR from 'unrest.io'
 
-const { Model, Int, String, APIManager, List, ForeignKey } = uR.db
+const { Model, Int, String, APIManager, StorageManager, List, ForeignKey } = uR.db
 
 class SourceImage extends Model {
   static slug = 'server.SourceImage'
@@ -30,4 +30,4 @@ class PartyImage extends Model {
 }
 
 new APIManager(SourceImage)
-new APIManager(PartyImage)
+new StorageManager(PartyImage)
