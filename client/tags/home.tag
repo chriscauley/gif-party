@@ -3,10 +3,10 @@ import uR from 'unrest.io'
 import fatch from './fatch'
 
 <gtfo-home>
-  <h2 class="flexy">Gif Tha Funk Out!</h2>
+  <!--<h2 class="flexy">Gif Tha Funk Out!</h2>-->
   <div class="flexy">
     <a href="#{gif}" each={ gif in gifs}>
-      <img src="{gif}party.gif" />
+      <img src="/media/.party/{gif}" />
       {gif}
     </a>
   </div>
@@ -14,11 +14,14 @@ import fatch from './fatch'
 <script>
 this.gifs = []
 const setGifs = (gifs) => {
+  gifs = gifs.filter(g => g.endsWith("party.gif"))
   uR.storage.set("image-choices",gifs)
-//this.gifs = gifs
+  this.gifs = gifs
   this.update()
 }
-fatch('gifs.log').then(setGifs)
+fatch("files").then(setGifs)
+fatch("files").then(l=> console.log(l))
+fatch("directories").then(l=> console.log(l))
 this.on("update",() => {
   this.target = window.location.hash.slice(1)
   if (!this.gifs.includes(this.target)) {

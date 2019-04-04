@@ -1,5 +1,5 @@
-export default url =>
-  fetch(url)
+export default file =>
+  fetch(`/media/.party/${file}.log`)
     .then(r => r.text())
     .then(text =>
       text

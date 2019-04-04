@@ -13,7 +13,7 @@ import uR from 'unrest.io'
   </div>
 <script>
 this.on('before-mount', () => {
-  this.editable_fieldnames = ['resize', 'n_frames', 'negate']
+  this.editable_fieldnames = ['resize', 'n_frames', 'negate', 'hue_rotate']
   this.image = uR.db.server.SourceImage.objects.get(this.opts.matches[1])
   this.initial = { source: this.image, n_frames: 12 }
 })
