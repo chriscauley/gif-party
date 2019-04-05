@@ -80,6 +80,10 @@ if [ -z "$GIF_SPLIT" ] && [ "$GIF_N_FRAMES" -gt "1" ]
 then
     echo Forcing gif split
     GIF_SPLIT=1
+    _new_dir coalesce
+    convert $SOURCE -coalesce -repage 0x0 +repage $SOURCE_2
+    SOURCE=$SOURCE_2
+    echo coalesced to remove gif imperfections
 fi
 
 if [ ! -z "$RESIZE" ]
