@@ -8,7 +8,7 @@
   "source": true,
   "scripts": {
     "client": "parcel client/index.html -p 8596 --public-url /static/ --no-hmr",
-    "lint": "eslint client/**/*.js"
+    "lint": "eslint client/**/*.js client/*.js"
   },
   "repository": {
     "type": "git",
