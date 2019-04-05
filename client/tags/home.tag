@@ -5,8 +5,7 @@ import fatch from '../fatch'
 <gtfo-home>
   <div class="home-hero text-center">
     <h1>
-      <div>Are you</div>
-      <div>ready to</div>
+      <div class="smaller">Are you ready to</div>
       <div>Gif The</div>
       <div class="text-rainbow">
         <span each={l in "FUNK"}>{l}</span>

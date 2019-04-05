@@ -137,8 +137,12 @@ then
 fi
 
 DELAY=${DELAY:=4}
+
+# create final gif
 echo delaying gif - $DELAY
 convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $DEST/party.gif
+
+# reset log files which are used in the app to generate file tree
 cd $ROOT
 echo */ > gifs.log
 find . -type f -print |grep -v /files.log > files.log

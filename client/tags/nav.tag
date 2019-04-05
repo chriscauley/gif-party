@@ -1,7 +1,7 @@
 <gtfo-nav>
   <header class="navbar">
     <section class="navbar-section">
-      <a href="/" class="navbar-brand mr-2 text-bold">GTFO</a>
+      <a href="/" class="navbar-brand mr-2 text-bold">GTFO.party</a>
       <a class="btn btn-link" each={ link in links } href={link.href}>{link.text}</a>
     </section>
     <section class="navbar-section">
@@ -10,7 +10,6 @@
   </header>
 <script>
   this.links = [
-    { text: "New Party Gif", href: "#/image/new/" }
   ]
 </script>
 </gtfo-nav>
