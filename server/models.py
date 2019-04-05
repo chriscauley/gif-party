@@ -25,7 +25,7 @@ def run(args):
 def partify(src_path, data):
     args = ['bash', 'gifit.sh', src_path, get_short_args(data)]
     args += get_args(data)
-    run(args)
+    return run(args)
 
 
 def get_args(data):
@@ -42,7 +42,7 @@ def get_args(data):
     if method == 'hue_rotate':
         args += ['-h']
     if method == 'replace_color':
-        raise NotImplementedError
+        args += ['-R', data.get('replace_color')]
     args = [str(arg) for arg in args]
     return args
 

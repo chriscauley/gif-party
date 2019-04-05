@@ -13,6 +13,6 @@ class PartyImageForm(forms.Form):
     n_frames = forms.IntegerField(required=False)
     METHOD_CHOICES = zip2(['hue_rotate','replace_color'])
     color_method = forms.ChoiceField(required=True,choices=METHOD_CHOICES)
-    color = forms.CharField(max_length=12,required=False)
+    replace_color = forms.CharField(max_length=20,required=False)
     source = forms.ModelChoiceField(queryset=SourceImage.objects.all())
-    delay = forms.IntegerField()
+    delay = forms.IntegerField(required=False)

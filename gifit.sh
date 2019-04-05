@@ -27,9 +27,6 @@ while [ "$1" != "" ]; do
             shift
             N_FRAMES=$1
             ;;
-        -h | --hue-rate )
-            HUE_RATE=$N_FRAMES
-            ;;
         -d | --delay )
             shift
             DELAY=$1
@@ -47,6 +44,12 @@ while [ "$1" != "" ]; do
             ;;
         -g | --gif)
             GIF_SPLIT=1
+            shift
+            ;;
+        -R | --replace )
+            shift
+            REPLACE=$1
+            ;;
         # -h | --help )
         #     usage
         #     exit
@@ -123,22 +126,37 @@ then
     DELAY=${DELAY:=`identify -format "%T\n" $OG_SOURCE|head -n 1`}
 fi
 
-if [ ! -z "$HUE_RATE" ]
+if [ ! -z "$REPLACE" ]
 then
+    _new_dir replace
+else
     _new_dir hue_rotate
-    for i in `seq $N_FRAMES`
-    do
-        HUE=$((200*i/$HUE_RATE))
-        N=`printf %03d $i`
-        S=$SOURCE
-        if [ ! -z "$GIF_SPLIT" ]
-        then
-            S=$GIF_DIR/$1
-            shift
-        fi
-        convert $S -modulate 100,100,$HUE $DIR/$N-$HUE.png
-    done
 fi
+
+FUZZ=3
+
+COLORS=(red orange yellow green blue purple)
+
+for i in `seq $N_FRAMES`
+do
+    HUE=$((200*i/$N_FRAMES))
+    N=`printf %03d $i`
+    S=$SOURCE
+    if [ ! -z "$GIF_SPLIT" ]
+    then
+        S=$GIF_DIR/$1
+        shift
+    fi
+    if [ ! -z "$REPLACE" ]
+    then
+        _IC=`expr $N % 6`
+        _COLOR=${COLORS[_IC]}
+        echo $_COLOR $_IC
+        convert $S -fuzz $FUZZ% -fill $_COLOR -opaque $REPLACE $DIR/$N.png
+    else
+        convert $S -modulate 100,100,$HUE $DIR/$N-$HUE.png
+    fi
+done
 
 DELAY=${DELAY:=4}
 

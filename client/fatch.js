@@ -50,7 +50,8 @@ fatch.cacheList = () => {
     _.entries(variant_map).forEach( ([variant_name,step_map]) => {
       const steps = []
       _.entries(step_map).forEach(([name,files]) => {
-        steps.push({ name, files})
+        files.sort()
+        steps.push({ name, files })
       })
       variants.push({
         name: variant_name,

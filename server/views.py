@@ -14,12 +14,15 @@ def party(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
     form = PartyImageForm(data)
     if not form.is_valid():
-        raise NotImplemented("Bad data")
+        print(form.errors)
+        raise NotImplementedError("Bad data")
     data = form.cleaned_data
     src_path = data['source'].src.path
     args = get_args(data)
     short_args = get_short_args(data)
-    partify(src_path,data)
+    output = partify(src_path,data)
+    print(output)
     return JsonResponse({
         'code': short_args,
+        'output': output,
     })

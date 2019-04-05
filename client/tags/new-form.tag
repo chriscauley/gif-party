@@ -15,6 +15,7 @@ import fatch from '../fatch'
 this.on('before-mount', () => {
   this.editable_fieldnames = [ 'resize', 'negate', 'color_method', 'replace_color' ]
   this.image = uR.db.server.SourceImage.objects.get(this.opts.matches[1])
+  window.IMAGE = this.image
   if (this.image.n_frames <= 1) {
     this.editable_fieldnames.unshift("delay")
     this.editable_fieldnames.unshift("n_frames")

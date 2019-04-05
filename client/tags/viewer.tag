@@ -10,11 +10,11 @@ import _ from 'lodash'
     </h2>
     <div if={fatch_obj} class="image-list">
       <div each={variant in fatch_obj.variants} class="card" onclick={showDetail}>
-        <div class="card-body">
+        <div class="card-body" tile={variant.name}>
           <div class="fixed-image">
             <img src="{prefix}{variant.party_src}" />
           </div>
-          {variant.name}
+          <div class="ellipsis">{variant.name}</div>
         </div>
       </div>
     </div>
