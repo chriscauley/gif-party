@@ -16,3 +16,4 @@ class PartyImageForm(forms.Form):
     replace_color = forms.CharField(max_length=20,required=False)
     source = forms.ModelChoiceField(queryset=SourceImage.objects.all())
     delay = forms.IntegerField(required=False)
+    fuzz = forms.IntegerField(required=False)

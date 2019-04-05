@@ -27,6 +27,10 @@ while [ "$1" != "" ]; do
             shift
             N_FRAMES=$1
             ;;
+        -f | --fuzz )
+            shift
+            FUZZ=$1
+            ;;
         -d | --delay )
             shift
             DELAY=$1
@@ -130,11 +134,12 @@ fi
 if [ ! -z "$REPLACE" ]
 then
     _new_dir replace
+    echo fuzzing $FUZZ%
+    FUZZ=${FUZZ:=6}
+    echo fuzzing $FUZZ%
 else
     _new_dir hue_rotate
 fi
-
-FUZZ=3
 
 COLORS=(red orange yellow green blue purple)
 

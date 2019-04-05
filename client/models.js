@@ -35,6 +35,7 @@ class PartyImage extends Model {
     }),
     replace_color: String('', { required: false, choices: color_choice_hack }),
     delay: Int(6, { choices: [2, 4, 6, 8, 10, 12, 16, 20] }),
+    fuzz: Int(3,{required: false}),
     /*delay: Int(0),
     files: List(""),*/
   }

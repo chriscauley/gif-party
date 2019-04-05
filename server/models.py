@@ -38,6 +38,8 @@ def get_args(data):
         args += ['-n',data['n_frames']]
     if data.get('delay'):
         args += ['-d',data['delay']]
+    if data.get('fuzz'):
+        args += ['-f',data['fuzz']]
     method = data.get('color_method')
     if method == 'hue_rotate':
         args += ['-h']
@@ -72,10 +74,9 @@ class SourceImage(models.Model):
         super().save(*args,**kwargs)
         # need to cache some data from imagemagic
         self.n_frames = len(run(['identify',self.src.path]).strip().split('\n'))
-        #print(self.src.path.split('/')[-1],self.n_frames)
 
         # get raw histogram
-        histogram = run(['convert',self.src.path,'-format','%c','histogram:info:'])
+        histogram = run(['convert',self.src.path,"+dither",'-format','%c','histogram:info:'])
 
         # trim whitespace, remove empty lines
         histogram = [l.strip() for l in histogram.split('\n') if l]
@@ -93,7 +94,7 @@ class SourceImage(models.Model):
         self.colors = []
         matched = []
         for line in histogram:
-            if len(self.colors) > 5:
+            if len(self.colors) > 10:
                 break
             count = int(line.split(':')[0])
             color = line.split(' ')[-1]
@@ -104,6 +105,4 @@ class SourceImage(models.Model):
                 'color': color,
                 'count': count,
             })
-            #print(count,color)
-
         super().save(*args,**kwargs)
