@@ -15,3 +15,4 @@ class PartyImageForm(forms.Form):
     color_method = forms.ChoiceField(required=True,choices=METHOD_CHOICES)
     color = forms.CharField(max_length=12,required=False)
     source = forms.ModelChoiceField(queryset=SourceImage.objects.all())
+    delay = forms.IntegerField()

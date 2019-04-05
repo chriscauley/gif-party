@@ -27,6 +27,7 @@ class PartyImage extends Model {
     negate: String("",{ choices: [['','None'],'red','green','blue'] }),
     color_method: String("hue_rotate",{ choices: ['hue_rotate', 'replace_color'] }),
     replace_color: String("",{required: false}),
+    delay: Int(6,{ choices: [2,4,6,8,10,12,16,20]}),
     /*delay: Int(0),
     files: List(""),*/
   }

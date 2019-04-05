@@ -36,6 +36,8 @@ def get_args(data):
         args += ['-N',data['negate']]
     if data.get('n_frames'):
         args += ['-n',data['n_frames']]
+    if data.get('delay'):
+        args += ['-d',data['delay']]
     method = data.get('color_method')
     if method == 'hue_rotate':
         args += ['-h']
