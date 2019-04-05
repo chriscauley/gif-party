@@ -8,9 +8,10 @@ import _ from 'lodash'
       <img src={image.src} class="inline-img" />
       {image.name}
     </h2>
-    <div if={fatch_obj} class="image-list">
-      <div each={variant in fatch_obj.variants} class="card" onclick={showDetail}>
-        <div class="card-body" tile={variant.name}>
+    <div class="image-list">
+      <div each={variant in variants} class="card { 'bg-secondary': variant === highlight }"
+           style="order: {variant.order}" onclick={showDetail}>
+        <div class="card-body" title={variant.name}>
           <div class="fixed-image">
             <img src="{prefix}{variant.party_src}" />
           </div>
@@ -25,6 +26,17 @@ this.on('update',() => {
   this.image = uR.db.server.SourceImage.objects.get(this.opts.source_id)
   const filename = this.image.src.split("/").pop()
   this.fatch_obj = fatch.list.find(f => f.filename === filename)
+  if (this.fatch_obj && this.fatch_obj.variants) {
+    this.variants = _.sortBy(
+      this.fatch_obj.variants,
+      variant => {
+        const index = this.opts.sort_codes.indexOf(variant.name)
+        if (index === 0) {
+          this.highlight = variant
+        }
+        return (index === -1)? 999:index
+      })
+  }
   this.prefix = fatch.PREFIX
 })
 showDetail(e) {
