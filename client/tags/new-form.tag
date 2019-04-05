@@ -32,7 +32,7 @@ submit(form) {
     ...form.getData(),
     source: this.opts.matches[1],
   }
-  uR.ajax({
+  return uR.ajax({
     url: "/api/party/",
     method: "POST",
     data,

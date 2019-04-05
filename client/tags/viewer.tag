@@ -25,7 +25,6 @@ this.on('update',() => {
   this.image = uR.db.server.SourceImage.objects.get(this.opts.source_id)
   const filename = this.image.src.split("/").pop()
   this.fatch_obj = fatch.list.find(f => f.filename === filename)
-  console.log(this.fatch_obj)
   this.prefix = fatch.PREFIX
 })
 </script>

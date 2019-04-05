@@ -36,8 +36,11 @@ def get_args(data):
         args += ['-N',data['negate']]
     if data.get('n_frames'):
         args += ['-n',data['n_frames']]
-    if data.get('hue_rotate'):
+    method = data.get('color_method')
+    if method == 'hue_rotate':
         args += ['-h']
+    if method == 'replace_color':
+        raise NotImplementedError
     args = [str(arg) for arg in args]
     return args
 
