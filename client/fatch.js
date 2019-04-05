@@ -1,4 +1,4 @@
-const fatch = file =>
+const get = file =>
   fetch(`/media/.party/${file}.log`)
     .then(r => {
       if (r.status !== 200) {
@@ -13,9 +13,9 @@ const fatch = file =>
       )
     })
 
-export default () => Promise.all([
-  fatch('files'),
-  fatch('directories'),
+const fatch = () => Promise.all([
+  get('files'),
+  get('directories'),
 ]).then(([files,directories]) => {
   files = files.filter(f => !f.endsWith(".log"))
   const tree = {}
@@ -34,3 +34,6 @@ export default () => Promise.all([
   return tree
 })
 
+fatch.getTree = () => uR.storage.get("RESULTS_TREE")
+
+export default fatch

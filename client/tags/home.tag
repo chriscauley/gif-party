@@ -1,9 +1,9 @@
 import uR from 'unrest.io'
 
-import fatch from './fatch'
+import fatch from '../fatch'
 
 <gtfo-home>
-  <!--<h2 class="flexy">Gif Tha Funk Out!</h2>-->
+  <h2 class="flexy">Gif Tha Funk Out!</h2>
   <div class="flexy">
     <a href="#{gif}" each={ gif in gifs}>
       <img src="/media/.party/{gif}" />

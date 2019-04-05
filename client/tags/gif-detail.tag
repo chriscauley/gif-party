@@ -1,4 +1,4 @@
-import fatch from './fatch'
+import fatch from '../fatch'
 
 <gif-detail>
   <div each={directory in directories}>

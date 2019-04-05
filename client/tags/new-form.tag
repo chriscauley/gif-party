@@ -1,5 +1,5 @@
 import uR from 'unrest.io'
-import fatch from './fatch'
+import fatch from '../fatch'
 
 <gtfo-new-form>
   <div class="columns">
