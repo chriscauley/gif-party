@@ -54,7 +54,7 @@ def get_short_args(data):
 class SourceImage(models.Model):
     name = models.CharField(max_length=32)
     src = models.ImageField(upload_to="source_images")
-    colors = JSONField(default=list)
+    colors = JSONField(default=list,blank=True)
     n_frames = models.IntegerField(default=0)
 
     @property
@@ -69,6 +69,8 @@ class SourceImage(models.Model):
         return self.name
 
     def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+        # need to cache some data from imagemagic
         self.n_frames = len(run(['identify',self.src.path]).strip().split('\n'))
         #print(self.src.path.split('/')[-1],self.n_frames)
 
