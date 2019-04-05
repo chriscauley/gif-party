@@ -23,13 +23,13 @@ class PartyImage extends Model {
     id: Int(0),
     source: ForeignKey('server.SourceImage'),
     resize: Int(0, { choices: [[0,'none'], 32, 64, 128] }),
-    n_frames: Int(0, { choices: [6,8,10,12,16,20,24,30,32]}),
-    negate: String("",{choices: ['','red','green','blue']}),
-    hue_rotate: Boolean(true),
+    n_frames: Int(0, { choices: [6,8,10,12,16,20,24,30,32] }),
+    negate: String("",{ choices: ['','red','green','blue'] }),
+    color_method: String("hue_rotate",{ choices: ['hue_rotate', 'replace_color'] }),
+    replace_color: String(""),
     /*delay: Int(0),
     files: List(""),*/
   }
-  static editable_fieldnames = ['source', 'resize']
 }
 
 new APIManager(SourceImage)

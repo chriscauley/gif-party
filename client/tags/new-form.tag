@@ -5,7 +5,7 @@ import fatch from '../fatch'
   <div class="columns">
     <div class="column col-4">
       <ur-form model={uR.db.server.PartyImage} editable_fieldnames={editable_fieldnames}
-               initial={initial} submit={submit} />
+               initial={initial} submit={submit} onchange={change} />
     </div>
     <div class="column col-8">
       <gtfo-viewer source_id={image.id} code={this.code} />
@@ -13,7 +13,7 @@ import fatch from '../fatch'
   </div>
 <script>
 this.on('before-mount', () => {
-  this.editable_fieldnames = ['resize', 'negate', 'hue_rotate']
+  this.editable_fieldnames = [ 'resize', 'negate', 'color_method', 'replace_color' ]
   this.image = uR.db.server.SourceImage.objects.get(this.opts.matches[1])
   if (this.image.n_frames <= 1) {
     this.editable_fieldnames.unshift("n_frames")
@@ -21,8 +21,11 @@ this.on('before-mount', () => {
   this.initial = { n_frames: 12, resize:32, negate:"", hue_rotate: false, }
 })
 this.on("update",() => {
-  console.log(this.code)
 })
+
+change(form) {
+  this.root.className = "method__"+this.root.querySelector('[name=color_method]').value
+}
 
 submit(form) {
   const data = {
