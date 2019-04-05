@@ -54,6 +54,8 @@ def get_short_args(data):
 
 
 class SourceImage(models.Model):
+    class Meta:
+        ordering = ("name",)
     name = models.CharField(max_length=32)
     src = models.ImageField(upload_to="source_images")
     colors = JSONField(default=list,blank=True)
