@@ -32,8 +32,6 @@ def get_args(data):
     args = []
     if data.get('resize'):
         args += ['-r',data['resize']]
-    if data.get('negate'):
-        args += ['-N',data['negate']]
     if data.get('n_frames'):
         args += ['-n',data['n_frames']]
     if data.get('delay'):
@@ -43,6 +41,10 @@ def get_args(data):
     method = data.get('color_method')
     if method == 'hue_rotate':
         args += ['-h']
+        # TODO doesn't work with replace color!
+        # need to do negate before replace color
+        if data.get('negate'):
+            args += ['-N',data['negate']]
     if method == 'replace_color':
         args += ['-R', data.get('replace_color')]
     args = [str(arg) for arg in args]
@@ -56,7 +58,7 @@ def get_short_args(data):
 class SourceImage(models.Model):
     class Meta:
         ordering = ("name",)
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32,unique=True)
     src = models.ImageField(upload_to="source_images")
     colors = JSONField(default=list,blank=True)
     n_frames = models.IntegerField(default=0)

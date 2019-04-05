@@ -17,7 +17,7 @@ this.on('before-mount', () => {
   this.editable_fieldnames = [ 'resize', 'negate', 'color_method', 'replace_color', 'fuzz' ]
   this.image = uR.db.server.SourceImage.objects.get(this.opts.matches[1])
   window.IMAGE = this.image
-  this.initial = { n_frames: 12, resize:32, negate:"", hue_rotate: false, fuzz: 3, color_method: 'hue_rotate' }
+  this.initial = { n_frames: 12, resize:128, negate:"", hue_rotate: false, fuzz: 3, color_method: 'hue_rotate' }
   if (this.image.n_frames <= 1) {
     this.editable_fieldnames.unshift("delay")
     this.editable_fieldnames.unshift("n_frames")
