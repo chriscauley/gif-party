@@ -123,7 +123,8 @@ then
     N_FRAMES=$GIF_N_FRAMES
 
     # ifno delay, use original
-    DELAY=${DELAY:=`identify -format "%T\n" $OG_SOURCE|head -n 1`}
+    _DELAYS=`identify -format "%T\n" $OG_SOURCE`
+    DELAY=${DELAY:=`bash ave.sh $_DELAYS`}
 fi
 
 if [ ! -z "$REPLACE" ]
