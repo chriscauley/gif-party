@@ -3,31 +3,27 @@ import uR from 'unrest.io'
 import fatch from '../fatch'
 
 <gtfo-home>
-  <h2 class="flexy">Gif Tha Funk Out!</h2>
-  <div class="flexy">
-    <a href="#{gif}" each={ gif in gifs}>
-      <img src="/media/.party/{gif}" />
-      {gif}
-    </a>
+  <div class="home-hero text-center">
+    <h1>
+      <div>Are you</div>
+      <div>ready to</div>
+      <div>Gif The</div>
+      <div class="text-rainbow">
+        <span each={l in "FUNK"}>{l}</span>
+      </div>
+      <div>Out?</div>
+    </h1>
+    <div each={link in links}>
+      <a href="#/image/new/" class="btn btn-link">
+        <img src={link.img} class="inline-img"/>
+        {link.text}
+        <img src={link.img} class="inline-img"/>
+      </a>
+    </div>
   </div>
-  <gif-detail if={target} target={target}/>
+
 <script>
-this.gifs = []
-const setGifs = (gifs) => {
-  gifs = gifs.filter(g => g.endsWith("party.gif"))
-  uR.storage.set("image-choices",gifs)
-  this.gifs = gifs
-  this.update()
-}
-fatch("files").then(setGifs)
-fatch("files").then(l=> console.log(l))
-fatch("directories").then(l=> console.log(l))
-this.on("update",() => {
-  this.target = window.location.hash.slice(1)
-  if (!this.gifs.includes(this.target)) {
-    this.target = undefined
-  }
-})
-window.addEventListener("hashchange",e=>this.update())
-</script>
+  this.links = [
+    {text: "Heck Yeah!", img: "/media/source_images/party-blob.gif"},
+  ]
 </gtfo-home>
