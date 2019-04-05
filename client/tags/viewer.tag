@@ -9,7 +9,7 @@ import _ from 'lodash'
       {image.name}
     </h2>
     <div if={fatch_obj} class="image-list">
-      <div each={variant in fatch_obj.variants} class="card">
+      <div each={variant in fatch_obj.variants} class="card" onclick={showDetail}>
         <div class="card-body">
           <div class="fixed-image">
             <img src="{prefix}{variant.party_src}" />
@@ -27,5 +27,12 @@ this.on('update',() => {
   this.fatch_obj = fatch.list.find(f => f.filename === filename)
   this.prefix = fatch.PREFIX
 })
+showDetail(e) {
+  uR.element.alert(
+    'gtfo-detail',
+    {},
+    { variant: e.item.variant, image: this.image }
+  )
+}
 </script>
 </gtfo-viewer>
