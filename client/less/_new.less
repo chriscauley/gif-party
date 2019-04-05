@@ -12,17 +12,22 @@
     margin: 0.5rem;
     .fixed-image {
       .flexy;
-      height: 128px;
-      width: 128px;
+      min-height: 128px;
+      min-width: 128px;
+      max-width: 256px;
     }
   }
   .ellipsis {
-    max-width: 128px;
+    max-width: 100%;
     padding-top: 0.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+}
+
+gtfo-new .image-list .card .fixed-image {
+  max-width: 128px;
 }
 
 gtfo-new-form {
