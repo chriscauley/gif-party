@@ -5,4 +5,4 @@ from server.models import SourceImage
 
 @admin.register(SourceImage)
 class SourceImageAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ['colors','n_frames']
