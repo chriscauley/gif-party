@@ -54,10 +54,9 @@ class SourceImage(models.Model):
 
     @property
     def as_json(self):
-        keys = ['id','name','colors','is_gif']
+        keys = ['id','name','colors','n_frames']
         return {
-            'id': self.id,
-            'name': self.name,
+            **{ key: getattr(self,key) for key in keys },
             'src': self.src.url,
         }
 

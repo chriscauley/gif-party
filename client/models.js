@@ -9,6 +9,9 @@ class SourceImage extends Model {
     name: String(),
     src: String(),
   }
+  static opts = {
+    n_frames: undefined,
+  }
   __str__() {
     return this.name
   }
