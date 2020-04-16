@@ -1,0 +1,47 @@
+.home-hero {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 14vh;
+  justify-content: center;
+  line-height: 1.2;
+  padding: 8vh 0;
+  text-align: center;
+  .smaller {
+    font-size: 8vh;
+  }
+}
+
+.home-hero a {
+  font-size: 0.5em;
+  img {
+    width: 2em;
+  }
+}
+
+.text-rainbow span {
+  font-family: Cursive;
+  font-weight: bold;
+  animation-timing-function: linear;
+  animation-duration: 2s;
+  animation-name: textrainbow;
+  animation-iteration-count:infinite;
+  &:nth-child(1) { animation-duration: 2.5s; }
+  &:nth-child(2) { animation-duration: 1.0s; }
+  &:nth-child(3) { animation-duration: 1.5s; }
+}
+
+@keyframes textrainbow {
+  0% { color: purple; }
+  9% { color: red; }
+  18% { color: orange; }
+  27% { color: yellow; }
+  36% { color: green; }
+  45% { color: blue; }
+  54% { color: purple; }
+  63% { color: red; }
+  72% { color: orange; }
+  81% { color: yellow; }
+  90% { color: green; }
+  100% { color: blue; }
+}
