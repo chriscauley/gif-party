@@ -21,7 +21,7 @@ def sourceimage_detail(request, object_id):
 
 def partyimage_schema(request):
     schema = form_to_schema(PartyImageForm())
-    return JsonResponse(schema)
+    return JsonResponse({'schema': schema})
 
 def party(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
