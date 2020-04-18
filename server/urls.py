@@ -15,12 +15,13 @@ urlpatterns = [
     re_path('api/(server)/([^/]+)/$', unrest.views.superuser_api_view),
     path("user.json", unrest.views.user_json),
     path("api/auth/register/", nopass_create),
+    re_path('^(?:image|images)/', unrest.views.index),
+    re_path('^$', unrest.views.index),
 ]
 
 if settings.DEBUG:
     from django.views.static import serve
     urlpatterns += [
-        path('', unrest.views.index),
         re_path(
             r'^media/(?P<path>.*)$',
             serve,
