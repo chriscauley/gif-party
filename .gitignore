@@ -13,3 +13,4 @@ __pycache__
 trash
 .DS_Store
 unrest
+server/settings/local.py
