@@ -1,10 +1,13 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from unrest.schema import form_to_schema
+from unrest.views import superuser_api_view
 
 from server.forms import PartyImageForm
 from server.models import SourceImage, get_args, get_short_args, partify
-from unrest.views import superuser_api_view
-import json
+
 
 def sourceimage_list(request):
     attrs = ['name', 'id', 'src']
@@ -15,6 +18,10 @@ def sourceimage_detail(request, object_id):
     attrs = ['name', 'id', 'src', 'colors', 'variants']
     result = get_object_or_404(SourceImage, id=object_id).to_json(attrs)
     return JsonResponse(result)
+
+def partyimage_schema(request):
+    schema = form_to_schema(PartyImageForm())
+    return JsonResponse(schema)
 
 def party(request):
     data = json.loads(request.body.decode('utf-8') or "{}")

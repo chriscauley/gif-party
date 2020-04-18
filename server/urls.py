@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/nopass/', include('unrest.nopass.urls')),
     path('api/server/SourceImage/', server.views.sourceimage_list),
     path('api/server/SourceImage/<int:object_id>/', server.views.sourceimage_detail),
+    path('api/schema/PartyImage/', server.views.partyimage_schema),
     path('api/party/', server.views.party),
     re_path('api/(server)/([^/]+)/$', unrest.views.superuser_api_view),
     path("user.json", unrest.views.user_json),
