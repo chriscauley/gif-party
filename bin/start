@@ -1,8 +1,8 @@
-#!/bin/bash
+#! /usr/bin/env bash
 
 . .venv/bin/activate
 DJANGO='python manage.py runserver 0.0.0.0:8379'
-YARN='yarn client'
+YARN='yarn develop'
 
 if [[ $1 == "tmux" ]];then
     tmux new-session -s ur-conf   $DJANGO
