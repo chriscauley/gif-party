@@ -1,19 +1,12 @@
+from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from subprocess import Popen, PIPE
 
-from unrest.models import JsonModel
+import os
+import json
 
-class AbstractModel(JsonModel):
-    class Meta:
-        abstract = True
-    json_fields = ['id', 'data']
-
-    def __str__(self):
-        return self.data.get(
-            "name",
-            "{} #: {}".format(self.__class__.__name__, self.id)
-        )
+from unrest.models import BaseModel
 
 def run(args):
     process = Popen(args, stdout=PIPE, stderr=PIPE)
@@ -55,7 +48,7 @@ def get_short_args(data):
     return "".join(get_args(data))
 
 
-class SourceImage(models.Model):
+class SourceImage(BaseModel):
     class Meta:
         ordering = ("name",)
     name = models.CharField(max_length=32,unique=True)
@@ -110,3 +103,30 @@ class SourceImage(models.Model):
                 'count': count,
             })
         super().save(*args,**kwargs)
+
+    @property
+    def filename(self):
+        return self.src.path.split('/')[-1]
+
+    @property
+    def _variant_path(self):
+        return os.path.join(settings.MEDIA_ROOT, ".party", self.filename)
+
+    @property
+    def variants(self):
+        #! TODO this has two file reads and needs to be replaced
+        variants = os.listdir(self._variant_path)
+        results = []
+        for variant in variants:
+            variant_path = self._variant_path+'/'+variant+'/'
+            steps = sorted(os.listdir(variant_path))
+            steps = [s for s in steps if os.path.isdir(variant_path+s)]
+            results.append({
+                'name': variant,
+                'src': f'{settings.MEDIA_URL}.party/{self.filename}/{variant}/party.gif',
+                'steps': [{
+                    'name': step,
+                    'files': sorted(os.listdir(variant_path+step))
+                } for step in steps]
+            })
+        return results
