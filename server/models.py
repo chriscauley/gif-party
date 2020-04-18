@@ -48,6 +48,25 @@ def get_short_args(data):
     return "".join(get_args(data))
 
 
+_choices = lambda a: tuple(zip(a, a))
+
+class PartyImage(BaseModel):
+    RESIZE_CHOICES = _choices([32, 64, 128, 256])
+    NEGATE_CHOICES = _choices(['red', 'green', 'blue'])
+    N_FRAMES_CHOICES = _choices([6, 8, 10, 12, 16, 20, 24, 30, 32])
+    DELAY_CHOICES = _choices([2, 4, 6, 8, 10, 12, 16, 20])
+    FUZZ_CHOICES = _choices(range(50))
+
+    resize = models.IntegerField(choices=RESIZE_CHOICES, null=True)
+    negate = models.CharField(choices=NEGATE_CHOICES, null=True, max_length=8)
+    n_frames = models.IntegerField(choices=N_FRAMES_CHOICES, null=True)
+    replace_color = models.CharField(null=True, max_length=16)
+    delay = models.IntegerField(default=6, choices=DELAY_CHOICES, null=True)
+    fuzz = models.IntegerField(default=3, choices=FUZZ_CHOICES, null=True)
+
+    sourceimage = models.ForeignKey("SourceImage", on_delete=models.CASCADE)
+
+
 class SourceImage(BaseModel):
     class Meta:
         ordering = ("name",)
