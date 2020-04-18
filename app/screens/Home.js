@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default () => {
-  const img = <img src="/imgs/party-blob.gif" className="p-2" />
+  const img = <img src="/static/imgs/party-blob.gif" className="mx-4" />
   return (
     <div className="home-hero text-gray-700 font-bold">
       <div>
@@ -12,7 +12,7 @@ export default () => {
         </div>
       </div>
       <div>Out?</div>
-      <a href="#/image/new/" className="text-blue-500 flex items-center justify-center ">
+      <a href="/images/" className="text-blue-500 flex items-center justify-center ">
         {img} Heck Yeah! {img}
       </a>
     </div>
