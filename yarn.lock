@@ -897,6 +897,10 @@
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
 
+"@unrest/tailwind@chriscauley/unrest-tailwindcss":
+  version "0.0.1"
+  resolved "https://codeload.github.com/chriscauley/unrest-tailwindcss/tar.gz/118c979f530a16b1848d1c146f5802fd7bae38fa"
+
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
