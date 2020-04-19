@@ -11,6 +11,15 @@ const ImageForm = withImageSchema(props => {
   if (loading) {
     return null
   }
+  schema.properties.replace_color.enum = []
+  schema.properties.replace_color.enumNames = []
+  props.colors.forEach(({color, count}) => {
+    schema.properties.replace_color.enum.push(color)
+    color = color.replace('srgba', 'rgba')
+    schema.properties.replace_color.enumNames.push(
+      <span className="w-4 h-4" style={{background: color}}></span>
+    )
+  })
   Object.entries(schema.properties).forEach( ([key, field]) => {
     if (field.hasOwnProperty('default')) {
       initial[key] = field.default
@@ -24,16 +33,16 @@ const ImageForm = withImageSchema(props => {
 })
 
 export default withImage(props => {
-  const { variants, loading, id, src, name } = props.api
+  const { variants, loading, id, src, name, colors } = props.api
   if (loading) {
     return null
   }
   return (
     <div className="flex">
-      <div className="w-1/3">
-        <ImageForm />
+      <div className="w-1/3 p-4">
+        <ImageForm colors={colors} />
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 p-4">
         {variants.map(({src, name}) => (
           <div key={name}>
             <img src={src} />

@@ -6,6 +6,7 @@ import ImageList from './screens/ImageList'
 import ImageDetail from './screens/ImageDetail'
 import Home from './screens/Home'
 import Nav from './components/Nav'
+import { AuthRoutes, LoginModal } from './components/Auth'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/image/:object_id/" component={ImageDetail} />
       </BrowserRouter>
       <HashRouter>
+        <AuthRoutes />
       </HashRouter>
     </div>
   )

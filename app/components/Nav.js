@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { AuthNavLink } from './Auth'
 
 export default () => {
   return (
@@ -9,6 +9,7 @@ export default () => {
       </section>
       <section className="navbar-section">
         <a className="btn btn-primary" href="https://github.com/chriscauley/gif-party/">github</a>
+        <AuthNavLink />
       </section>
     </header>
   )
