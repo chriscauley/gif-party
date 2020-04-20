@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/server/SourceImage/', server.views.sourceimage_list),
     path('api/server/SourceImage/<int:object_id>/', server.views.sourceimage_detail),
     path('api/schema/PartyImage/', server.views.partyimage_schema),
-    path('api/party/', server.views.party),
+    path('api/party/', server.views.save_partyimage),
     re_path('api/(server)/([^/]+)/$', unrest.views.superuser_api_view),
     path("user.json", unrest.views.user_json),
     path("api/auth/register/", nopass_create),

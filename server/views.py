@@ -6,7 +6,8 @@ from unrest.schema import form_to_schema
 from unrest.views import superuser_api_view
 
 from server.forms import PartyImageForm
-from server.models import SourceImage, get_args, get_short_args, partify
+from server.models import SourceImage
+from party import utils
 
 
 def sourceimage_list(request):
@@ -15,27 +16,21 @@ def sourceimage_list(request):
     return JsonResponse({ 'results': results })
 
 def sourceimage_detail(request, object_id):
-    attrs = ['name', 'id', 'src', 'colors', 'variants']
+    attrs = ['name', 'id', 'src', 'colors', 'variants', 'n_frames']
     result = get_object_or_404(SourceImage, id=object_id).to_json(attrs)
     return JsonResponse(result)
 
 def partyimage_schema(request):
-    schema = form_to_schema(PartyImageForm())
+    schema = form_to_schema(PartyImageForm(None))
     return JsonResponse({'schema': schema})
 
-def party(request):
+def save_partyimage(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
+    data['sourceimage'] = get_object_or_404(SourceImage, id=data.pop('sourceimage_id'))
     form = PartyImageForm(data)
     if not form.is_valid():
-        print(form.errors)
+        # TODO should return a json of form errors
         raise NotImplementedError("Bad data")
-    data = form.cleaned_data
-    src_path = data['source'].src.path
-    args = get_args(data)
-    short_args = get_short_args(data)
-    output = partify(src_path,data)
-    return JsonResponse({
-        'code': short_args,
-        'output': output,
-    })
-
+    # move most this into PartyImage or PartyImageForm
+    partyimage = form.save()
+    return JsonResponse({})
