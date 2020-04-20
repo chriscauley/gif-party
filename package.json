@@ -15,7 +15,7 @@
     "url": "git+https://github.com/chriscauley/gif-party.git"
   },
   "dependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.5",
     "@unrest/tailwind": "chriscauley/unrest-tailwindcss",
@@ -27,6 +27,7 @@
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.9.4",
     "sass": "^1.26.3"
   }
 }
