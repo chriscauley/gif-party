@@ -2,8 +2,30 @@ import React from 'react'
 import { cloneDeep } from 'lodash'
 import RestHook from '@unrest/react-api'
 import Form from '@unrest/react-jsonschema-form'
+import classnames from 'classnames'
 
 const withImageSchema = RestHook('/api/schema/PartyImage/')
+
+const colorCss = selected => (
+  classnames("w-8 h-8 border m-1 rounded", {'border-black p-1': selected, 'p-2': !selected})
+)
+
+class ColorSelect extends React.Component {
+  render() {
+    const { options, value, onChange } = this.props
+    const enumOptions = options.enumOptions.filter(option => option.value)
+    enumOptions.forEach(o => o.selected = o.value === value)
+    return (
+      <div className="flex flex-wrap">
+        {enumOptions.map(({label, value, selected}) => (
+          <span className={colorCss(selected)} key={value} title={label} onClick={() => onChange(value)}>
+            <div className="w-full h-full" style={{background: value}}></div>
+          </span>
+        ))}
+      </div>
+    )
+  }
+}
 
 const getSchema = (schema, n_frames, colors) => {
   schema = cloneDeep(schema)
@@ -16,7 +38,7 @@ const getSchema = (schema, n_frames, colors) => {
   // colors are on a gif by gif basis
   schema.properties.replace_color.enum = ['']
   schema.properties.replace_color.enumNames = ['']
-  colors.forEach(({color, count}) => {
+  colors.forEach(([color, count]) => {
     schema.properties.replace_color.enum.push(color)
     color = color.replace('srgba', 'rgba')
     schema.properties.replace_color.enumNames.push(`${color} (${count})`)
@@ -33,6 +55,7 @@ const getUISchema = (schema, formData={}) => {
     hide('replace_color')
   } else if (formData.method !== 'hue_rotate') {
     hide('negate_channel')
+    uiSchema['replace_color'] = { 'ui:widget': ColorSelect }
   }
   return uiSchema
 }
