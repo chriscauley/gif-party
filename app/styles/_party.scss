@@ -1,0 +1,68 @@
+@mixin linear-gradient-6($a, $b, $c, $d, $e, $f) {
+  background-image: linear-gradient(
+    to right,
+    $a 16.6%,
+    $b 16.6%, $b 33.3%,
+    $c 33.3%, $c 50.0%,
+    $d 50.0%, $d 66.6%,
+    $e 66.6%, $e 83.3%,
+    $f 83.3%,
+  )
+}
+
+.bg-rainbow {
+  @include linear-gradient-6(red, orange, yellow, green, blue, purple);
+}
+
+.channel-negated-base {
+  @include linear-gradient-6(#f00, #0f0, #00f, #000, #fff, #808080)
+}
+
+.channel-negated-red {
+  @include linear-gradient-6(#000, #ff0, #f0f, #f00, #0ff, #808080)
+}
+
+.channel-negated-green {
+  @include linear-gradient-6(#ff0, #000, #0ff, #0f0, #f0f, #808080)
+}
+
+.channel-negated-blue {
+  @include linear-gradient-6(#f0f, #0ff, #000, #00f, #ff0, #808080)
+}
+
+/* taken from https://codepen.io/thebabydino/pen/hkxGp */
+.rainbow-wheel {
+  display: inline-block;
+  position: relative;
+  border: solid 0.1em white;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background:
+    linear-gradient(36deg, #272b66 42.34%, transparent 42.34%) 0 0,
+    linear-gradient(72deg, #2d559f 75.48%, transparent 75.48%) 0 0,
+    linear-gradient(-36deg, #9ac147 42.34%, transparent 42.34%) 100% 0,
+    linear-gradient(-72deg, #639b47 75.48%, transparent 75.48%) 100% 0,
+    linear-gradient(36deg, transparent 57.66%, #e1e23b 57.66%) 100% 100%,
+    linear-gradient(72deg, transparent 24.52%, #f7941e 24.52%) 100% 100%,
+    linear-gradient(-36deg, transparent 57.66%, #662a6c 57.66%) 0 100%,
+    linear-gradient(-72deg, transparent 24.52%, #9a1d34 24.52%) 0 100%,
+    #43a1cd linear-gradient(#ba3e2e, #ba3e2e) 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+  transition: 1s
+}
+
+.rainbow-wheel::after {
+  $height: 0.2em;
+  position: absolute;
+  top: 50%; left: 50%;
+  margin: - $height / 2;
+  width: $height;
+  height: $height;
+  border-radius: 50%;
+  background: white;
+  content: ''
+}
+
+.rainbow-wheel:hover { transform: rotate(360deg) }
