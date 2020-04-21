@@ -21,10 +21,12 @@ export default withImage(props => {
           sourceimage_id={id}
         />
       </div>
-      <div className="w-2/3 p-4 flex flex-wrap">
-        {variants.map(({src, name}) => (
-          <PartyImageCard key={name} name={name} src={src} />
-        ))}
+      <div className="w-2/3 p-4">
+        <div className="flex flex-wrap">
+          {variants.map((variant) => (
+            <PartyImageCard key={variant.name} {...variant} />
+          ))}
+        </div>
       </div>
     </div>
   )
