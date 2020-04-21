@@ -160,6 +160,7 @@ do
         echo $_COLOR $_IC
         convert $S -fuzz $FUZZ% -fill $_COLOR -opaque $REPLACE $DIR/$N.png
     else
+        # "hue_rotate"
         convert $S -modulate 100,100,$HUE $DIR/$N-$HUE.png
     fi
 done

@@ -29,11 +29,11 @@ const getSchema = (schema, n_frames, colors) => {
 const getUISchema = (schema, formData={}) => {
   const uiSchema = {}
   const hide = property => uiSchema[property] = {"classNames": "hidden"}
-  if (formData.method !== 'replace') {
+  if (formData.method !== 'replace_color') {
     hide('fuzz')
     hide('replace_color')
   } else if (formData.method !== 'hue_rotate') {
-    hide('negate')
+    hide('negate_channel')
   }
   return uiSchema
 }

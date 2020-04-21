@@ -9,4 +9,5 @@ class SourceImageAdmin(admin.ModelAdmin):
 
 @admin.register(PartyImage)
 class PartyImageAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['party_dir']
+    list_filter = ['sourceimage']
