@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from server.models import SourceImage, PartyImage
+from party.models import SourceImage, PartyImage
 
 @admin.register(SourceImage)
 class SourceImageAdmin(admin.ModelAdmin):

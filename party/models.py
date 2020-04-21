@@ -15,8 +15,8 @@ _delay_choices = lambda a: tuple(zip(a, [f'{int(100/i):d} fps' for i in a]))
 
 class PartyImage(BaseModel):
     NEGATE_CHANNEL_CHOICES = _choices(['red', 'green', 'blue'])
-    N_FRAMES_CHOICES = _choices([6, 8, 10, 12, 16, 20, 24, 30, 32])
-    DELAY_CHOICES = _delay_choices([2, 4, 6, 8, 10, 12, 16, 20])
+    N_FRAMES_CHOICES = _choices([6, 12, 18])
+    DELAY_CHOICES = _delay_choices([4, 8, 16])
     FUZZ_CHOICES = _choices(range(50))
     METHOD_CHOICES = [
         ('hue_rotate', 'Hue Rotate'),

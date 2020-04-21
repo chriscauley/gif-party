@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404
 from unrest.schema import form_to_schema
 from unrest.views import superuser_api_view
 
-from server.forms import PartyImageForm
-from server.models import SourceImage
+from party.forms import PartyImageForm
+from party.models import SourceImage
 from party import utils
 
 

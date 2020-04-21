@@ -1,5 +1,5 @@
 from django import forms
-from server.models import SourceImage, PartyImage
+from party.models import SourceImage, PartyImage
 
 
 class PartyImageForm(forms.ModelForm):

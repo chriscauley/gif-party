@@ -5,15 +5,15 @@ from django.urls import path, re_path, include
 import unrest.views
 from unrest.nopass.views import create as nopass_create
 
-import server.views
+import party.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/nopass/', include('unrest.nopass.urls')),
-    path('api/server/SourceImage/', server.views.sourceimage_list),
-    path('api/server/SourceImage/<int:object_id>/', server.views.sourceimage_detail),
-    path('api/schema/PartyImage/', server.views.partyimage_schema),
-    path('api/party/', server.views.save_partyimage),
+    path('api/server/SourceImage/', party.views.sourceimage_list),
+    path('api/server/SourceImage/<int:object_id>/', party.views.sourceimage_detail),
+    path('api/schema/PartyImage/', party.views.partyimage_schema),
+    path('api/party/', party.views.save_partyimage),
     re_path('api/(server)/([^/]+)/$', unrest.views.superuser_api_view),
     path("user.json", unrest.views.user_json),
     path("api/auth/register/", nopass_create),
