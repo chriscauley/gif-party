@@ -111,18 +111,19 @@ class SourceImage(BaseModel):
         # TODO takes about 1us per variant
         # should probably cache this in redis to avoid having all these directory reads
         results = []
+        _ = lambda s: s.replace("#", "%23")
         for partyimage in self.partyimage_set.all():
             variant_path = self._variant_path+'/'+partyimage.name+'/'
             steps = sorted(os.listdir(variant_path))
             steps = [s for s in steps if os.path.isdir(variant_path+s)]
-            root_url = f'{settings.MEDIA_URL}.party/{self.filename}/{partyimage.name}/'
+            root_url = _(f'{settings.MEDIA_URL}.party/{self.filename}/{partyimage.name}/')
             results.append({
                 'name': partyimage.name,
                 'src': f'{root_url}party.gif',
                 'root_url': root_url,
                 'steps': [{
                     'name': step,
-                    'files': sorted(os.listdir(variant_path+step))
+                    'files': [_(s) for s in sorted(os.listdir(variant_path+step))]
                 } for step in steps]
             })
         return results
