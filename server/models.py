@@ -38,7 +38,7 @@ class PartyImage(BaseModel):
 
     @property
     def party_dir(self):
-        return f"{self.sourceimage.filename}/{name}"
+        return f"{self.sourceimage.filename}/{self.name}"
 
     @property
     def party_exists(self):
@@ -48,6 +48,7 @@ class PartyImage(BaseModel):
         new = not self.pk
         super().save(*args, **kwargs)
         if not self.party_exists:
+            print('party time from pi#', self.id, self.party_dir)
             self.party()
 
     @property

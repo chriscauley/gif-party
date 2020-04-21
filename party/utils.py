@@ -1,3 +1,4 @@
+from collections import defaultdict
 from subprocess import Popen, PIPE
 
 # DEFINITIONS
@@ -69,12 +70,12 @@ def get_args(data):
 
 
 def get_n_frames(path):
-    return len(run(['identify',self.src.path]).strip().split('\n'))
+    return len(run(['identify',path]).strip().split('\n'))
 
 
 def get_colors(path):
     # get raw histogram
-    histogram = run(['convert',self.src.path,"+dither",'-format','%c','histogram:info:'])
+    histogram = run(['convert',path,"+dither",'-format','%c','histogram:info:'])
 
     # trim whitespace, remove empty lines
     histogram = [l.strip() for l in histogram.split('\n') if l]
@@ -89,19 +90,13 @@ def get_colors(path):
     # ignore zero alpha
     histogram = [l for l in histogram if not ',  0)' in l]
 
-    colors = []
+    counts = defaultdict(int)
     matched = []
     for line in histogram:
-        if len(self.colors) > 10:
-            break
         count = int(line.split(':')[0])
-        color = line.split(' ')[-1]
-        if color in matched:
-            continue
-        matched.append(color)
-        colors.append({
-            'color': color,
-            'count': count,
-        })
+        color = line.split(' ')[-2][:-2]
+        counts[color] += count
 
-    return colors
+    items = sorted(counts.items(), key=lambda i: i[1], reverse=True)
+
+    return [i[0] for i in items[:10]]
