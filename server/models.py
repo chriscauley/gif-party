@@ -65,10 +65,17 @@ class PartyImage(BaseModel):
 class SourceImage(BaseModel):
     class Meta:
         ordering = ("name",)
+    VISIBILITY_CHOICES = _choices([
+        'needs_review', # needs review
+        'private', # hidden by uploader
+        'public', # bisible for everyone
+        'hidden', # by mods
+    ])
     name = models.CharField(max_length=32,unique=True)
     src = models.ImageField(upload_to="source_images")
     colors = JSONField(default=list,blank=True)
     n_frames = models.IntegerField(default=0)
+    visibility = models.CharField(max_length=16, choices=VISIBILITY_CHOICES, default="unknown")
 
     @property
     def as_json(self):
