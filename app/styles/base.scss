@@ -27,6 +27,8 @@ html, body, #react-app {
   }
   img {
     image-rendering: pixelated;
+    max-width: 100%;
+    min-width: 96px;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;

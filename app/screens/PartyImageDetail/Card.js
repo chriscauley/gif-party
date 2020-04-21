@@ -51,7 +51,7 @@ export default props => {
   return (
     <div className={css.card.outer('m-4 w-40')}>
       <div className="list-img bg-gray-100">
-        <img src={src} width="96" />
+        <img src={src} />
       </div>
       <div className={css.card.body()}>
         <div>
