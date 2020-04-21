@@ -33,8 +33,12 @@ class PartyImage(BaseModel):
     sourceimage = models.ForeignKey("SourceImage", on_delete=models.CASCADE)
 
     @property
+    def name(self):
+        return ''.join(utils.get_args(self.arg_dict))
+
+    @property
     def party_dir(self):
-        return f"{self.sourceimage.filename}/{''.join(utils.get_args(self.arg_dict))}"
+        return f"{self.sourceimage.filename}/{name}"
 
     @property
     def party_exists(self):
@@ -103,16 +107,18 @@ class SourceImage(BaseModel):
 
     @property
     def variants(self):
-        #! TODO this has two file reads and needs to be replaced
-        variants = os.listdir(self._variant_path)
+        # TODO takes about 1us per variant
+        # should probably cache this in redis to avoid having all these directory reads
         results = []
-        for variant in variants:
-            variant_path = self._variant_path+'/'+variant+'/'
+        for partyimage in self.partyimage_set.all():
+            variant_path = self._variant_path+'/'+partyimage.name+'/'
             steps = sorted(os.listdir(variant_path))
             steps = [s for s in steps if os.path.isdir(variant_path+s)]
+            root_url = f'{settings.MEDIA_URL}.party/{self.filename}/{partyimage.name}/'
             results.append({
-                'name': variant,
-                'src': f'{settings.MEDIA_URL}.party/{self.filename}/{variant}/party.gif',
+                'name': partyimage.name,
+                'src': f'{root_url}party.gif',
+                'root_url': root_url,
                 'steps': [{
                     'name': step,
                     'files': sorted(os.listdir(variant_path+step))
