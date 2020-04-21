@@ -1,10 +1,8 @@
 import React from 'react'
 import { cloneDeep } from 'lodash'
-import css from '@unrest/css'
 import RestHook from '@unrest/react-api'
 import Form from '@unrest/react-jsonschema-form'
 
-const withImage = RestHook('/api/server/SourceImage/${match.params.object_id}/')
 const withImageSchema = RestHook('/api/schema/PartyImage/')
 
 const getSchema = (schema, n_frames, colors) => {
@@ -103,39 +101,4 @@ class BaseImageForm extends React.Component {
   }
 }
 
-const ImageForm = withImageSchema(BaseImageForm)
-
-const PartyImageCard = ({ name, src }) => {
-  return (
-    <div className={css.card.outer('m-4')}>
-      <div className="list-img bg-gray-100">
-        <img src={src} />
-      </div>
-      {name}
-    </div>
-  )
-}
-
-export default withImage(props => {
-  const { variants, loading, id, src, name, colors, n_frames, refetch } = props.api
-  if (loading && !variants) {
-    return null
-  }
-  return (
-    <div className="flex">
-      <div className="w-1/3 p-4">
-        <ImageForm
-          colors={colors}
-          n_frames={n_frames}
-          onSuccess={() => refetch(props)}
-          sourceimage_id={id}
-        />
-      </div>
-      <div className="w-2/3 p-4 flex flex-wrap">
-        {variants.map(({src, name}) => (
-          <PartyImageCard key={name} name={name} src={src} />
-        ))}
-      </div>
-    </div>
-  )
-})
+export default withImageSchema(BaseImageForm)

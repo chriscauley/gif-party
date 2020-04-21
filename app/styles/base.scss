@@ -25,6 +25,7 @@ html, body, #react-app {
     background: transparent;
   }
   img {
+    image-rendering: pixelated;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from 'react-router-dom'
 
 import ImageList from './screens/ImageList'
-import ImageDetail from './screens/ImageDetail'
+import PartyImageDetail from './screens/PartyImageDetail'
 import Home from './screens/Home'
 import Nav from './components/Nav'
 import { AuthRoutes, LoginModal } from './components/Auth'
@@ -15,7 +15,7 @@ const App = () => {
       <BrowserRouter>
         <Route exact path="/" component={Home} />
         <Route path="/images/" component={ImageList} />
-        <Route path="/image/:object_id/" component={ImageDetail} />
+        <Route path="/image/:object_id/" component={PartyImageDetail} />
       </BrowserRouter>
       <HashRouter>
         <AuthRoutes />
