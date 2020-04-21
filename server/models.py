@@ -57,10 +57,7 @@ class PartyImage(BaseModel):
 
     @staticmethod
     def get_from_dict(sourceimage_id, kwargs):
-        for field in utils.PARTY_FIELDS:
-            if PartyImage._meta.get_field(field).null:
-                # nullable fields need None to make the filtering unique
-                kwargs[field] = kwargs.get(field, None)
+        kwargs = utils.clean_flagkwargs(kwargs)
         partyimage, new  = PartyImage.objects.get_or_create(sourceimage_id=sourceimage_id, **kwargs)
         return partyimage
 
@@ -78,7 +75,7 @@ class SourceImage(BaseModel):
     ])
     name = models.CharField(max_length=32,unique=True)
     src = models.ImageField(upload_to="source_images")
-    colors = JSONField(default=list,blank=True)
+    colors = JSONField(default=list, blank=True)
     n_frames = models.IntegerField(default=0)
     visibility = models.CharField(max_length=16, choices=VISIBILITY_CHOICES, default="unknown")
 
@@ -95,7 +92,7 @@ class SourceImage(BaseModel):
 
     def save(self,*args,**kwargs):
         self.n_frames = utils.get_n_frames(self.src.path)
-        self.colors = utils.get_colros(self.src.path)
+        self.colors = utils.get_colors(self.src.path)
         super().save(*args,**kwargs)
 
     @property
@@ -124,6 +121,7 @@ class SourceImage(BaseModel):
                 'steps': [{
                     'name': step,
                     'files': [_(s) for s in sorted(os.listdir(variant_path+step))]
-                } for step in steps]
+                } for step in steps],
+                **partyimage.to_json(utils.PARTY_FIELDS)
             })
         return results

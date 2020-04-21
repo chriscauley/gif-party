@@ -8,6 +8,25 @@ from subprocess import Popen, PIPE
 # flagkwargs - PartyImage flags as a dict
 
 
+def clean_flagkwargs(flagkwargs):
+    # some arguments don't work together
+    if flagkwargs['method'] == 'replace_color':
+        if not flagkwargs.get('replace_color'):
+            raise ValueError("Cannot have replace color without specifying a color")
+        flagkwargs.pop('negate_channel', None)
+    elif flagkwargs['method'] == 'hue_rotate':
+        flagkwargs.pop('replace_color', None)
+        flagkwargs.pop('fuzz', None)
+    # for now just hard code this since its fixed on front end
+    flagkwargs['n_frames'] = flagkwargs.get('n_frames') or 12
+
+    # everything except method can be None
+    for field in PARTY_FIELDS:
+        if field != 'method':
+            flagkwargs[field] = flagkwargs.get(field, None)
+    return flagkwargs
+
+
 PARTY_FIELDS = ['n_frames', 'delay', 'fuzz', 'method', 'negate_channel', 'replace_color']
 FLAG_TO_FIELD = {
     'R': 'replace_color',
@@ -94,9 +113,9 @@ def get_colors(path):
     matched = []
     for line in histogram:
         count = int(line.split(':')[0])
-        color = line.split(' ')[-2][:-2]
+        color = line.split(' ')[-2][:7]
         counts[color] += count
 
     items = sorted(counts.items(), key=lambda i: i[1], reverse=True)
 
-    return [i[0] for i in items[:10]]
+    return items[:10]
