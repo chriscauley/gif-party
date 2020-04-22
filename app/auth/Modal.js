@@ -17,7 +17,6 @@ class BaseModal extends React.Component {
     return config[slug]
   }
   onSubmit = formData => {
-    console.log(formData)
     return post(this.getOptions().post_url, formData)
       .catch(error => this.setState({error}))
   }

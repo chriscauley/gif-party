@@ -126,6 +126,7 @@ class SourceImage(BaseModel):
             steps = sorted(os.listdir(variant_path))
             steps = [s for s in steps if os.path.isdir(os.path.join(variant_path,s))]
             results.append({
+                'id': partyimage.id,
                 'name': partyimage.name,
                 'src': src_url,
                 'root_url': root_url,

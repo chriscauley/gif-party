@@ -46,10 +46,10 @@ const NegateChannel = ({color}) => (
 
 
 export default props => {
-  const { name, src, delay, fuzz, replace_color, negate_channel } = props
+  const { id, sourceimage_id, name, src, delay, fuzz, replace_color, negate_channel } = props
   const speed = delay && parseInt(100/delay)
   return (
-    <div className={css.card.outer('m-4 w-40')}>
+    <a href={`#/party/${sourceimage_id}/${id}/`} className={css.card.outer('m-4 w-40')}>
       <div className="list-img bg-gray-100">
         <img src={src} />
       </div>
@@ -80,6 +80,6 @@ export default props => {
           )}
         </div>
       </div>
-    </div>
+    </a>
   )
 }

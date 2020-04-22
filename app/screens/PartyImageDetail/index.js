@@ -1,10 +1,9 @@
 import React from 'react'
 import css from '@unrest/css'
-import RestHook from '@unrest/react-api'
+
 import PartyImageForm from './Form'
 import PartyImageCard from './Card'
-
-const withImage = RestHook('/api/server/SourceImage/${match.params.object_id}/')
+import withImage from './withImage'
 
 export default withImage(props => {
   const { variants, loading, id, src, name, colors, n_frames, refetch } = props.api
@@ -30,7 +29,7 @@ export default withImage(props => {
             <div className={css.card.body()}>(no changes)</div>
           </div>
           {variants.map((variant) => (
-            <PartyImageCard key={variant.name} {...variant} />
+            <PartyImageCard key={variant.name} sourceimage_id={id} {...variant} />
           ))}
         </div>
       </div>

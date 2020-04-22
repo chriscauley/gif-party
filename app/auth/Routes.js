@@ -3,8 +3,6 @@ import { Route } from 'react-router-dom'
 import { LoginModal, SignupModal } from './Modal'
 import config from './config'
 
-console.log(config)
-
 export default function AuthRoutes() {
   return (
     <>

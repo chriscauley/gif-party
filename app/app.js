@@ -4,6 +4,7 @@ import { BrowserRouter, HashRouter, Route, Link } from 'react-router-dom'
 
 import ImageList from './screens/ImageList'
 import PartyImageDetail from './screens/PartyImageDetail'
+import PartyImageModal from './screens/PartyImageDetail/Modal'
 import Home from './screens/Home'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
@@ -16,9 +17,10 @@ const App = () => {
       <BrowserRouter>
         <Route exact path="/" component={Home} />
         <Route path="/images/" component={ImageList} />
-        <Route path="/image/:object_id/" component={PartyImageDetail} />
+        <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
       </BrowserRouter>
       <HashRouter>
+        <Route path="/party/:sourceimage_id/:partyimage_id/" component={PartyImageModal} />
         <AuthRoutes />
       </HashRouter>
       <Footer />

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default () => (
-  <div className="footer text-center p-4">
-    <a className="btn btn-primary" href="https://github.com/chriscauley/gif-party/">View on GitHub</a>
+  <div className="footer text-center p-8 m-4 mt-16 border-t">
+    <a className="text-blue-500" href="https://github.com/chriscauley/gif-party/">View on GitHub</a>
   </div>
 )

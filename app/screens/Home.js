@@ -12,7 +12,7 @@ export default () => {
         </div>
       </div>
       <div>Out?</div>
-      <a href="/images/" className="text-blue-500 flex items-center justify-center ">
+      <a href="/images/" className="text-blue-500 flex items-center justify-center">
         {img} Heck Yeah! {img}
       </a>
     </div>
