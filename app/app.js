@@ -6,6 +6,7 @@ import ImageList from './screens/ImageList'
 import PartyImageDetail from './screens/PartyImageDetail'
 import Home from './screens/Home'
 import Nav from './components/Nav'
+import Footer from './components/Footer'
 import AuthRoutes from './auth/Routes'
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
       <HashRouter>
         <AuthRoutes />
       </HashRouter>
+      <Footer />
     </div>
   )
 }

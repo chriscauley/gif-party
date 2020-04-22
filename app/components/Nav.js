@@ -8,7 +8,6 @@ export default () => {
         <a href="/" className="navbar-brand mr-2 font-bold text-blue-700 text-3xl">GTFO.party</a>
       </section>
       <section className="navbar-section">
-        <a className="btn btn-primary" href="https://github.com/chriscauley/gif-party/">github</a>
         <AuthNavLink />
       </section>
     </header>
