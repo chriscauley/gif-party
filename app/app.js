@@ -6,7 +6,7 @@ import ImageList from './screens/ImageList'
 import PartyImageDetail from './screens/PartyImageDetail'
 import Home from './screens/Home'
 import Nav from './components/Nav'
-import { AuthRoutes, LoginModal } from './components/Auth'
+import AuthRoutes from './auth/Routes'
 
 const App = () => {
   return (

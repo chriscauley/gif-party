@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthNavLink } from './Auth'
+import AuthNavLink from '../auth/NavLink'
 
 export default () => {
   return (
