@@ -8,7 +8,7 @@
   "source": true,
   "scripts": {
     "develop": "parcel app/index.html -p 8596 --public-url /static/ --no-hmr",
-    "lint": "eslint client/**/*.js client/*.js"
+    "lint": "yarn eslint app"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
     "@babel/preset-env": "^7.9.5",
     "@unrest/tailwind": "chriscauley/unrest-tailwindcss",
     "classnames": "^2.2.6",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
     "parcel": "^1.12.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -28,6 +30,11 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.9.4",
+    "babel-eslint": "^10.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.19.0",
+    "prettier": "^2.0.5",
     "sass": "^1.26.3"
   }
 }

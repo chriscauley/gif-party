@@ -8,20 +8,27 @@ import post from '../../post'
 
 const withImageSchema = RestHook('/api/schema/PartyImage/')
 
-const colorCss = selected => (
-  classnames("w-8 h-8 border m-1 rounded", {'border-black p-1': selected, 'p-2': !selected})
-)
+const colorCss = (selected) =>
+  classnames('w-8 h-8 border m-1 rounded', {
+    'border-black p-1': selected,
+    'p-2': !selected,
+  })
 
 class ColorSelect extends React.Component {
   render() {
     const { options, value, onChange } = this.props
-    const enumOptions = options.enumOptions.filter(option => option.value)
-    enumOptions.forEach(o => o.selected = o.value === value)
+    const enumOptions = options.enumOptions.filter((option) => option.value)
+    enumOptions.forEach((o) => (o.selected = o.value === value))
     return (
       <div className="flex flex-wrap">
-        {enumOptions.map(({label, value, selected}) => (
-          <span className={colorCss(selected)} key={value} title={label} onClick={() => onChange(value)}>
-            <div className="w-full h-full" style={{background: value}}></div>
+        {enumOptions.map(({ label, value, selected }) => (
+          <span
+            className={colorCss(selected)}
+            key={value}
+            title={label}
+            onClick={() => onChange(value)}
+          >
+            <div className="w-full h-full" style={{ background: value }}></div>
           </span>
         ))}
       </div>
@@ -49,9 +56,9 @@ const getSchema = (schema, n_frames, colors) => {
   return schema
 }
 
-const getUISchema = (schema, formData={}) => {
+const getUISchema = (schema, formData = {}) => {
   const uiSchema = {}
-  const hide = property => uiSchema[property] = {"classNames": "hidden"}
+  const hide = (property) => (uiSchema[property] = { classNames: 'hidden' })
   if (formData.method !== 'replace_color') {
     hide('fuzz')
     hide('replace_color')
@@ -63,9 +70,8 @@ const getUISchema = (schema, formData={}) => {
 }
 
 // TODO move this to a more general place
-const getInitial = schema => {
+const getInitial = (schema) => {
   const initial = {}
-  const { required=[] } = schema
   Object.entries(schema.properties).forEach(([key, field]) => {
     if (field.default !== null && field.default !== undefined) {
       initial[key] = field.default
@@ -76,24 +82,17 @@ const getInitial = schema => {
   return initial
 }
 
-
-const getCSRF = (cookie=document.cookie) => {
-  const match = cookie.match(/csrftoken=([^;]+)/)
-  return match && match[1]
-}
-
-
 class BaseImageForm extends React.Component {
   state = {
     formData: undefined,
     error: undefined,
   }
-  onChange = formData => this.setState({formData})
+  onChange = (formData) => this.setState({ formData })
 
-  submit = formData => {
+  submit = (formData) => {
     const { sourceimage_id } = this.props
-    return post("/api/party/", {...formData, sourceimage_id})
-      .catch(error => this.setState({error}))
+    return post('/api/party/', { ...formData, sourceimage_id })
+      .catch((error) => this.setState({ error }))
       .then(this.props.onSuccess)
   }
 

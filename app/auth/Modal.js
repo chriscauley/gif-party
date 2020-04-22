@@ -10,27 +10,27 @@ import post from '../post'
 class BaseModal extends React.Component {
   state = {
     slug: 'login',
-    error: ''
+    error: '',
   }
   getOptions = () => {
-    const { slug=this.state.slug } = this.props
+    const { slug = this.state.slug } = this.props
     return config[slug]
   }
-  onSubmit = formData => {
-    return post(this.getOptions().post_url, formData)
-      .catch(error => this.setState({error}))
+  onSubmit = (formData) => {
+    return post(this.getOptions().post_url, formData).catch((error) =>
+      this.setState({ error }),
+    )
   }
   onSuccess = () => {
     this.props.api.refetch()
     const { hash } = window.location
     if (hash === config.login.url || config.signup.url) {
-      window.location.hash = ""
+      window.location.hash = ''
     }
   }
 
   render() {
-    const { title, url, schema } = this.getOptions()
-    const defaultSuccess = () => (window.location.hash = "")
+    const { schema } = this.getOptions()
     return (
       <div className={css.modal.outer()}>
         <a href="#" className={css.modal.mask()}></a>
@@ -50,12 +50,6 @@ const Modal = withUser(BaseModal)
 
 export default Modal
 
+export const LoginModal = () => <Modal slug="login" />
 
-export const LoginModal = () => (
-  <Modal slug="login" />
-)
-
-
-export const SignupModal = () => (
-  <Modal slug="signup" />
-)
+export const SignupModal = () => <Modal slug="signup" />

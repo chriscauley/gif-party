@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, HashRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Route } from 'react-router-dom'
 
 import ImageList from './screens/ImageList'
 import PartyImageDetail from './screens/PartyImageDetail'
@@ -20,7 +20,10 @@ const App = () => {
         <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
       </BrowserRouter>
       <HashRouter>
-        <Route path="/party/:sourceimage_id/:partyimage_id/" component={PartyImageModal} />
+        <Route
+          path="/party/:sourceimage_id/:partyimage_id/"
+          component={PartyImageModal}
+        />
         <AuthRoutes />
       </HashRouter>
       <Footer />
