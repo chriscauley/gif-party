@@ -4,6 +4,8 @@ import RestHook from '@unrest/react-api'
 import Form from '@unrest/react-jsonschema-form'
 import classnames from 'classnames'
 
+import post from '../../post'
+
 const withImageSchema = RestHook('/api/schema/PartyImage/')
 
 const colorCss = selected => (
@@ -90,15 +92,7 @@ class BaseImageForm extends React.Component {
 
   submit = formData => {
     const { sourceimage_id } = this.props
-    return fetch("/api/party/", {
-      body: JSON.stringify({...formData, sourceimage_id}),
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        "X-CSRFToken": getCSRF()
-      }
-    })
-      .then(r => r.json())
+    return post("/api/party/", {...formData, sourceimage_id})
       .catch(error => this.setState({error}))
       .then(this.props.onSuccess)
   }
