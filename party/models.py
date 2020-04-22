@@ -82,6 +82,7 @@ class SourceImage(BaseModel):
         'private', # hidden by uploader
         'public', # bisible for everyone
         'hidden', # by mods
+        'trash', # should be deleted
     ])
     name = models.CharField(max_length=32,unique=True)
     src = models.ImageField(upload_to="source_images")

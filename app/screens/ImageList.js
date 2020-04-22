@@ -11,12 +11,15 @@ const BaseImageList = props => {
     return null
   }
   return (
-    <div className="flex flex-wrap">
-      {results.map(({id, name, src}) => (
-        <ImageCard key={id} to={`/image/${id}/`} src={src}>
-          <div className="text-center mb-4">{name}</div>
-        </ImageCard>
-      ))}
+    <div>
+      <h1 className="h1 text-center">Select an Image to Partify</h1>
+      <div className="flex flex-wrap justify-center">
+        {results.map(({id, name, src}) => (
+          <ImageCard key={id} to={`/image/${id}/`} src={src}>
+            <div className="text-center mb-4">{name}</div>
+          </ImageCard>
+        ))}
+      </div>
     </div>
   )
 }

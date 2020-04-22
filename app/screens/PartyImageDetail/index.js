@@ -13,14 +13,17 @@ export default withImage(props => {
   return (
     <div className="flex">
       <div className="w-1/3 p-4">
+        <h2 className="h2">2. Select Gif Options</h2>
         <PartyImageForm
           colors={colors}
           n_frames={n_frames}
           onSuccess={() => refetch(props)}
           sourceimage_id={id}
         />
+        <a href="#/help/" className={css.link()}>{"What's all this?"}</a>
       </div>
       <div className="w-2/3 p-4">
+        <h2 className="h2">3. Download results</h2>
         <div className="flex flex-wrap">
           <div className={css.card.outer('m-4 w-40')}>
             <div className="list-img bg-gray-100">
