@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path, include
 
-import unrest.views
+from unrest import views as unrest_views, auth_views
 from unrest.nopass.views import create as nopass_create
 
 import party.views
@@ -14,11 +14,15 @@ urlpatterns = [
     path('api/server/SourceImage/<int:object_id>/', party.views.sourceimage_detail),
     path('api/schema/PartyImage/', party.views.partyimage_schema),
     path('api/party/', party.views.save_partyimage),
-    re_path('api/(server)/([^/]+)/$', unrest.views.superuser_api_view),
-    path("user.json", unrest.views.user_json),
     path("api/auth/register/", nopass_create),
-    re_path('^(?:image|images)/', unrest.views.index),
-    re_path('^$', unrest.views.index),
+    re_path('^(?:image|images)/', unrest_views.index),
+    re_path('^$', unrest_views.index),
+
+
+    path("api/user.json", unrest_views.user_json),
+    path('api/login/', auth_views.login_ajax),
+    path('api/signup/', auth_views.signup_ajax),
+    path('api/logout/', auth_views.logout_ajax),
 ]
 
 if settings.DEBUG:
