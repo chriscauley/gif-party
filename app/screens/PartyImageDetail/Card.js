@@ -1,6 +1,8 @@
 import React from 'react'
 import css from '@unrest/css'
 
+import ImageCard from '../../components/ImageCard'
+
 const PARTY_FIELDS = ['n_frames', 'delay', 'fuzz', 'method', 'negate_channel', 'replace_color']
 const FLAG_TO_FIELD = {
     'R': 'replace_color',
@@ -49,10 +51,7 @@ export default props => {
   const { id, sourceimage_id, name, src, delay, fuzz, replace_color, negate_channel } = props
   const speed = delay && parseInt(100/delay)
   return (
-    <a href={`#/party/${sourceimage_id}/${id}/`} className={css.card.outer('m-4 w-40')}>
-      <div className="list-img bg-gray-100">
-        <img src={src} />
-      </div>
+    <ImageCard href={`#/party/${sourceimage_id}/${id}/`} src={src}>
       <div className={css.card.body()}>
         <div>
           {negate_channel && (
@@ -80,6 +79,6 @@ export default props => {
           )}
         </div>
       </div>
-    </a>
+    </ImageCard>
   )
 }

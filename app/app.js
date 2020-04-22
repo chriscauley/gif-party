@@ -13,8 +13,8 @@ import AuthRoutes from './auth/Routes'
 const App = () => {
   return (
     <div className="container mx-auto">
-      <Nav />
       <BrowserRouter>
+        <Nav />
         <Route exact path="/" component={Home} />
         <Route path="/images/" component={ImageList} />
         <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
