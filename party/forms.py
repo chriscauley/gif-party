@@ -21,4 +21,4 @@ class PartyImageForm(forms.ModelForm):
 
     class Meta:
         model = PartyImage
-        fields = ('delay', 'method', 'negate_channel', 'replace_color', 'fuzz',)
+        fields = ('method', 'negate_channel', 'replace_color', 'fuzz',)

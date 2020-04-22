@@ -27,7 +27,7 @@ def clean_flagkwargs(flagkwargs):
     return flagkwargs
 
 
-PARTY_FIELDS = ['n_frames', 'delay', 'fuzz', 'method', 'negate_channel', 'replace_color']
+PARTY_FIELDS = ['n_frames', 'fuzz', 'method', 'negate_channel', 'replace_color']
 FLAG_TO_FIELD = {
     'R': 'replace_color',
     'N': 'negate_channel',
@@ -61,9 +61,12 @@ def run(args):
     return stdout.decode("utf-8")
 
 
-def partify(src_path, data):
+def partify(src_path, output_root, data, output_filename=None):
     args = get_args(data)
-    return run(['bash', 'gifit.sh', src_path, "".join(args)] + args)
+    dest_dir = output_root + "/" + "".join(args)
+    if output_filename:
+        args += ['-o', output_filename]
+    return run(['bash', 'gifit.sh', src_path, dest_dir] + args)
 
 
 def get_args(data):

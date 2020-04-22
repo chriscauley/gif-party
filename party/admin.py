@@ -9,5 +9,5 @@ class SourceImageAdmin(admin.ModelAdmin):
 
 @admin.register(PartyImage)
 class PartyImageAdmin(admin.ModelAdmin):
-    list_display = ['party_dir']
+    list_display = ['party_dir', 'replace_color']
     list_filter = ['sourceimage']

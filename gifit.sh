@@ -9,8 +9,9 @@ EXT="${FILENAME##*.}"
 FILENAME="${FILENAME%.*}"
 mkdir -p .media/.party/
 ROOT=`realpath .media/.party/`
-mkdir -p $ROOT/$FILENAME.$EXT/$2
-DEST=`realpath $ROOT/$FILENAME.$EXT/$2`
+mkdir -p $ROOT/$2
+DEST=`realpath $ROOT/$2`
+OUTPUT_FILENAME=party.gif
 shift
 shift
 
@@ -53,6 +54,10 @@ while [ "$1" != "" ]; do
         -R | --replace )
             shift
             REPLACE=$1
+            ;;
+        -o | --output )
+            shift
+            OUTPUT_FILENAME=$1
             ;;
         # -h | --help )
         #     usage
@@ -169,4 +174,4 @@ DELAY=${DELAY:=4}
 
 # create final gif
 echo delaying gif - $DELAY
-convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png $DEST/party.gif
+convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png "$DEST/$OUTPUT_FILENAME"
