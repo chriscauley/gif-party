@@ -6,7 +6,7 @@ import classnames from 'classnames'
 
 import post from '../../post'
 
-const withImageSchema = RestHook('/api/schema/PartyImage/')
+const withPartyImageSchema = RestHook('/api/schema/PartyImage/')
 
 const colorCss = (selected) =>
   classnames('w-8 h-8 border m-1 rounded', {
@@ -117,4 +117,4 @@ class BaseImageForm extends React.Component {
   }
 }
 
-export default withImageSchema(BaseImageForm)
+export default withPartyImageSchema(BaseImageForm)

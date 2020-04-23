@@ -1,8 +1,8 @@
 import React from 'react'
 import css from '@unrest/css'
-import withImage from './withImage'
+import withSourceImage from './withSourceImage'
 
-export default withImage((props) => {
+export default withSourceImage((props) => {
   const { loading, variants = [] } = props.api
   const partyimage = variants.find(
     (pi) => pi.id === parseInt(props.match.params.partyimage_id),

@@ -3,9 +3,9 @@ import css from '@unrest/css'
 
 import PartyImageForm from './Form'
 import PartyImageCard from './Card'
-import withImage from './withImage'
+import withSourceImage from './withSourceImage'
 
-export default withImage((props) => {
+export default withSourceImage((props) => {
   const { variants, loading, id, src, colors, n_frames, refetch } = props.api
   if (loading && !variants) {
     return null

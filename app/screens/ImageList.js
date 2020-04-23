@@ -2,7 +2,7 @@ import React from 'react'
 import RestHook from '@unrest/react-api'
 import ImageCard from '../components/ImageCard'
 
-const withImages = RestHook('/api/server/SourceImage/')
+const withSourceImages = RestHook('/api/server/SourceImage/')
 
 const BaseImageList = (props) => {
   const { loading, results = [] } = props.api
@@ -23,4 +23,4 @@ const BaseImageList = (props) => {
   )
 }
 
-export default withImages(BaseImageList)
+export default withSourceImages(BaseImageList)
