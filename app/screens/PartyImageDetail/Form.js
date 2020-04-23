@@ -1,6 +1,6 @@
 import React from 'react'
 import { cloneDeep } from 'lodash'
-import RestHook from '@unrest/react-api'
+import RestHook from '@unrest/react-rest-hook'
 import Form, { post } from '@unrest/react-jsonschema-form'
 import classnames from 'classnames'
 

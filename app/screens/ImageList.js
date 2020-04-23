@@ -1,5 +1,5 @@
 import React from 'react'
-import RestHook from '@unrest/react-api'
+import RestHook from '@unrest/react-rest-hook'
 import css from '@unrest/css'
 
 import ImageCard from '../components/ImageCard'
