@@ -9,4 +9,7 @@ INSTALLED_APPS = [
   'server',
   'party',
   'unrest.nopass',
+  'unrest.user',
 ]
+
+AUTH_USER_MODEL = 'user.User'
