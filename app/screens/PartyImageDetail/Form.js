@@ -1,10 +1,8 @@
 import React from 'react'
 import { cloneDeep } from 'lodash'
 import RestHook from '@unrest/react-api'
-import Form from '@unrest/react-jsonschema-form'
+import Form, { post } from '@unrest/react-jsonschema-form'
 import classnames from 'classnames'
-
-import post from '../../post'
 
 const withPartyImageSchema = RestHook('/api/schema/PartyImage/')
 
@@ -91,7 +89,7 @@ class BaseImageForm extends React.Component {
 
   submit = (formData) => {
     const { sourceimage_id } = this.props
-    return post('/api/party/', { ...formData, sourceimage_id })
+    return post('/api/PartyImage/', { ...formData, sourceimage_id })
       .catch((error) => this.setState({ error }))
       .then(this.props.onSuccess)
   }

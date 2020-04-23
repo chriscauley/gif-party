@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route } from 'react-router-dom'
 
-import ImageList from './screens/ImageList'
+import ImageList, { NewSourceImageModal } from './screens/ImageList'
 import PartyImageDetail from './screens/PartyImageDetail'
 import PartyImageModal from './screens/PartyImageDetail/Modal'
 import Home from './screens/Home'
@@ -24,6 +24,7 @@ const App = () => {
           path="/party/:sourceimage_id/:partyimage_id/"
           component={PartyImageModal}
         />
+        <Route path="/new/SourceImage/" component={NewSourceImageModal} />
         <AuthRoutes />
       </HashRouter>
       <Footer />

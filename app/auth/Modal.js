@@ -1,11 +1,10 @@
 import React from 'react'
 
 import css from '@unrest/css'
-import Form from '@unrest/react-jsonschema-form'
+import Form, { post } from '@unrest/react-jsonschema-form'
 
 import config from './config'
 import withUser from './withUser'
-import post from '../post'
 
 class BaseModal extends React.Component {
   state = {
