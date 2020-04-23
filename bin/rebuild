@@ -1,0 +1,25 @@
+#! /usr/bin/env bash
+# everything necessary to rebuild site after fresh deploy
+
+set -e
+
+git pull
+
+# currently using latest versin of django-unrest via symlink
+cd unrest
+git pull
+cd ..
+
+# currently using latest version of unrest node packages
+rm -rf node_modules/@unrest
+
+# install any new packages
+yarn install
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# rebuild and collect static
+yarn parcel build app/index.html --public-url /static/
+python manage.py collectstatic --no-input
+
+# reset server
