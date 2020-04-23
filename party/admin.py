@@ -5,8 +5,8 @@ from party.models import SourceImage, PartyImage
 
 @admin.register(SourceImage)
 class SourceImageAdmin(admin.ModelAdmin):
-    readonly_fields = ['colors','n_frames']
-    list_display = ['__str__', 'img', 'visibility']
+    readonly_fields = ['colors','n_frames', 'uploaded_by']
+    list_display = ['__str__', 'img', 'visibility', 'created']
     list_editable = ['visibility']
     list_filter = ['visibility']
     def img(self, obj):
@@ -15,5 +15,5 @@ class SourceImageAdmin(admin.ModelAdmin):
 
 @admin.register(PartyImage)
 class PartyImageAdmin(admin.ModelAdmin):
-    list_display = ['party_dir', 'replace_color']
+    list_display = ['party_dir', 'replace_color', 'created']
     list_filter = ['sourceimage']

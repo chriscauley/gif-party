@@ -1,11 +1,14 @@
 import json
+from datauri import DataURI
 
+from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from unrest.decorators import login_required
 from unrest.schema import form_to_schema
 from unrest.views import superuser_api_view
 
-from party.forms import PartyImageForm
+from party.forms import PartyImageForm, SourceImageForm
 from party.models import SourceImage
 from party import utils
 
@@ -24,7 +27,11 @@ def partyimage_schema(request):
     schema = form_to_schema(PartyImageForm(None))
     return JsonResponse({'schema': schema})
 
-def save_partyimage(request):
+def sourceimage_schema(request):
+    schema = form_to_schema(SourceImageForm())
+    return JsonResponse({'schema': schema, 'post_url': '/api/SourceImage/'})
+
+def post_partyimage(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
     data['sourceimage'] = get_object_or_404(SourceImage, id=data.pop('sourceimage_id'))
     form = PartyImageForm(data)
@@ -34,3 +41,14 @@ def save_partyimage(request):
     # move most this into PartyImage or PartyImageForm
     partyimage = form.save()
     return JsonResponse({})
+
+@login_required
+def post_sourceimage(request):
+    data = json.loads(request.body.decode('utf-8') or "{}")
+    uri = DataURI(data.pop('src'))
+    f = ContentFile(uri.data, name=uri.name)
+    si = SourceImage(uploaded_by=request.user)
+    si.src.save(f.name, f)
+    si.save()
+    FILES = {'src': f}
+    return JsonResponse({'sourceimage_id': si.id})

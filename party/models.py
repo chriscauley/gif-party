@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.template.defaultfilters import slugify
 from subprocess import Popen, PIPE
 
 import os
@@ -50,7 +51,10 @@ class PartyImage(BaseModel):
 
     @property
     def arg_dict(self):
-        return self.to_json(utils.PARTY_FIELDS)
+        arg_dict = self.to_json(utils.PARTY_FIELDS)
+        if not self.sourceimage.is_animated:
+            arg_dict['delay'] = utils.DELAY
+        return arg_dict
 
     @staticmethod
     def get_from_dict(sourceimage_id, kwargs):
@@ -58,10 +62,8 @@ class PartyImage(BaseModel):
         partyimage, new  = PartyImage.objects.get_or_create(sourceimage_id=sourceimage_id, **kwargs)
         return partyimage
 
-    def party(self, delay=6):
+    def party(self):
         # party has delay added in since delay is optional
-        arg_dict = self.arg_dict
-        arg_dict['delay'] = delay
         argstr = ''.join(utils.get_args(self.arg_dict))
         og_name = self.sourceimage.filename
         output_filename = og_name + argstr + '.gif'
@@ -84,11 +86,12 @@ class SourceImage(BaseModel):
         'hidden', # by mods
         'trash', # should be deleted
     ])
-    name = models.CharField(max_length=32,unique=True)
+    name = models.CharField(max_length=32)
     src = models.ImageField(upload_to="source_images")
     colors = JSONField(default=list, blank=True)
     n_frames = models.IntegerField(default=0)
-    visibility = models.CharField(max_length=16, choices=VISIBILITY_CHOICES, default="unknown")
+    visibility = models.CharField(max_length=16, choices=VISIBILITY_CHOICES, default="needs_review")
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     @property
     def as_json(self):
@@ -98,12 +101,18 @@ class SourceImage(BaseModel):
             'src': self.src.url,
         }
 
+    @property
+    def is_animated(self):
+        return self.n_frames > 1
+
     def __str__(self):
         return self.name
 
     def save(self,*args,**kwargs):
         self.n_frames = utils.get_n_frames(self.src.path)
         self.colors = utils.get_colors(self.src.path)
+        if not self.name:
+            self.name = slugify(".".join(self.filename.split('.')[:-1]))
         super().save(*args,**kwargs)
 
     @property
