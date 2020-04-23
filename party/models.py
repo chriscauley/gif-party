@@ -14,14 +14,14 @@ _choices = lambda a: tuple(zip(a, a))
 
 class PartyImage(BaseModel):
     NEGATE_CHANNEL_CHOICES = _choices(['red', 'green', 'blue'])
-    N_FRAMES_CHOICES = _choices([6, 12, 18])
+    N_FRAMES_CHOICES = _choices([7, 12, 18])
     FUZZ_CHOICES = _choices(range(50))
     METHOD_CHOICES = [
         ('hue_rotate', 'Hue Rotate'),
         ('replace_color', 'Replace Color'),
     ]
 
-    n_frames = models.IntegerField("Number of Frames", choices=N_FRAMES_CHOICES, null=True, default=12)
+    n_frames = models.IntegerField("Number of Frames", choices=N_FRAMES_CHOICES, null=True, default=7)
     method = models.CharField(choices=METHOD_CHOICES, default="hue_rotate", max_length=16)
     negate_channel = models.CharField(choices=NEGATE_CHANNEL_CHOICES, null=True, blank=True, max_length=8)
     replace_color = models.CharField(null=True, blank=True, max_length=32)

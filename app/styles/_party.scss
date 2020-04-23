@@ -1,3 +1,11 @@
+$red: #e81d1d;
+$orange: #e8b71d;
+$yellow: #e3e81d;
+$green: #1de840;
+$cyan: #1ddde8;
+$blue: #2b1de8;
+$purple: #dd00f3;
+
 @mixin linear-gradient-6($a, $b, $c, $d, $e, $f) {
   background-image: linear-gradient(
     to right,
@@ -11,7 +19,7 @@
 }
 
 .bg-rainbow {
-  @include linear-gradient-6(red, orange, yellow, green, blue, purple);
+  @include linear-gradient-6($red, $orange, $yellow, $green, $blue, $purple);
 }
 
 .channel-negated-base {

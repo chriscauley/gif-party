@@ -15,8 +15,9 @@ OUTPUT_FILENAME=party.gif
 shift
 shift
 
-N_FRAMES=24
-
+N_FRAMES=7
+COLORS=("#e81d1d" "#e8b71d" "#e3e81d" "#1de840" "#1ddde8" "#2b1de8" "#dd00f3")
+N_COLORS=7
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -146,8 +147,6 @@ else
     _new_dir hue_rotate
 fi
 
-COLORS=(red orange yellow green blue purple)
-
 for i in `seq $N_FRAMES`
 do
     HUE=$((200*i/$N_FRAMES))
@@ -160,7 +159,7 @@ do
     fi
     if [ ! -z "$REPLACE" ]
     then
-        _IC=`expr $N % 6`
+        _IC=`expr $N % $N_COLORS`
         _COLOR=${COLORS[_IC]}
         echo $_COLOR $_IC
         convert $S -fuzz $FUZZ% -fill $_COLOR -opaque "$REPLACE" $DIR/$N.png

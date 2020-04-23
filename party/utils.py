@@ -7,6 +7,9 @@ from subprocess import Popen, PIPE
 # flagstr - the "flag string" used to save PartyImages under like -n12-d6-f3-h-Ngreen
 # flagkwargs - PartyImage flags as a dict
 
+N_FRAMES=7
+DELAY=12
+
 
 def clean_flagkwargs(flagkwargs):
     # some arguments don't work together
@@ -18,7 +21,7 @@ def clean_flagkwargs(flagkwargs):
         flagkwargs.pop('replace_color', None)
         flagkwargs.pop('fuzz', None)
     # for now just hard code this since its fixed on front end
-    flagkwargs['n_frames'] = flagkwargs.get('n_frames') or 12
+    flagkwargs['n_frames'] = flagkwargs.get('n_frames') or N_FRAMES
 
     # everything except method can be None
     for field in PARTY_FIELDS:
