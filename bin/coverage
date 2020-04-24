@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+coverage run --omit=.venv/*,unrest/* ./manage.py test
+coverage html -d .htmlcov

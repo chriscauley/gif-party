@@ -28,7 +28,7 @@ urlpatterns = [
     path('api/logout/', user_views.logout_ajax),
 ]
 
-if settings.DEBUG:
+if settings.DEBUG: # pragma: no cover
     from django.views.static import serve
     urlpatterns += [
         re_path(
