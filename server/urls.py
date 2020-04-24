@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/schema/SourceImage/', party.views.sourceimage_schema),
     path('api/SourceImage/', party.views.post_sourceimage),
     path("api/auth/register/", nopass_create),
-    re_path('^(?:image|images)/', unrest_views.index),
+    re_path('^(?:image|images|login|logout|signup|new)/', unrest_views.index),
     re_path('^$', unrest_views.index),
 
 

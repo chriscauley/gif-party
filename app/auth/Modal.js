@@ -24,18 +24,43 @@ class BaseModal extends React.Component {
     this.props.auth.refetch()
     this.props.history.replace(this.getNext() || config.login_redirect)
   }
+  getNext = () => decodeURIComponent(this.props.match.params.next || '')
 
   render() {
+    if (this.props.auth.user) {
+      return <Redirect to={this.getNext()} />
+    }
     const { schema } = this.getOptions()
     return (
       <div className={css.modal.outer()}>
-        <a href="#" className={css.modal.mask()}></a>
+        <div
+          onClick={() => this.props.history.goBack()}
+          className={css.modal.mask()}
+        />
         <div className={css.modal.content()}>
           <Form
             schema={schema}
             onSubmit={this.onSubmit}
             onSuccess={this.onSuccess}
           />
+          {this.props.slug === 'login' ? (
+            <div>
+              {"Don't have an account? "}
+              <Link
+                replace={true}
+                to={config.makeUrl('signup', this.getNext())}
+              >
+                Signup
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {'Already have an account?'}
+              <Link replace={true} to={config.makeUrl('login', this.getNext())}>
+                Login
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     )

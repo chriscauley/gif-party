@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import RestHook from '@unrest/react-rest-hook'
 import css from '@unrest/css'
 
 import ImageCard from '../components/ImageCard'
-import Modal from '../components/Modal'
 import Form, { post } from '@unrest/react-jsonschema-form'
+import loginRequired from '../auth/loginRequired'
 
 const withSourceImages = RestHook('/api/server/SourceImage/')
 
@@ -24,9 +25,12 @@ const BaseImageList = (props) => {
         ))}
       </div>
       <div className="m-8 fixed bottom-0 right-0">
-        <a href="#/new/SourceImage/" className='rounded-full text-white bg-blue-500 text-3xl w-12 h-12 flex items-center justify-center shadow-2xl'>
-          <span className="fa fa-plus"/>
-        </a>
+        <Link
+          to="/new/SourceImage/"
+          className="rounded-full text-white bg-blue-500 text-3xl w-12 h-12 flex items-center justify-center shadow-2xl"
+        >
+          <span className="fa fa-plus" />
+        </Link>
       </div>
     </div>
   )
@@ -36,16 +40,27 @@ export default withSourceImages(BaseImageList)
 
 const withSourceImageSchema = RestHook('/api/schema/SourceImage/')
 
-export const NewSourceImageModal = withSourceImageSchema(props => {
-  if (props.api.loading) { return null }
+const BaseNewSourceImageModal = (props) => {
+  if (props.api.loading) {
+    return null
+  }
   // TODO onSuccess should use router to avoid page refresh
   return (
-    <Modal>
-      <Form
-        onSubmit={formData => post(props.api.post_url, formData)}
-        onSuccess={data => window.location = `/image/${data.sourceimage_id}/`}
-        schema={props.api.schema}
-      />
-    </Modal>
+    <div className={css.modal.outer()}>
+      <Link to={'/images'} className={css.modal.mask()} />
+      <div className={css.modal.content()}>
+        <Form
+          onSubmit={(formData) => post(props.api.post_url, formData)}
+          onSuccess={(data) =>
+            props.history.replace(`/image/${data.sourceimage_id}/`)
+          }
+          schema={props.api.schema}
+        />
+      </div>
+    </div>
   )
-})
+}
+
+export const NewSourceImageModal = loginRequired(
+  withSourceImageSchema(BaseNewSourceImageModal),
+)

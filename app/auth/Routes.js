@@ -6,9 +6,14 @@ import config from './config'
 export default function AuthRoutes() {
   return (
     <>
-      <Route path={config.login.url.replace(/^#/, '')} component={LoginModal} />
       <Route
-        path={config.signup.url.replace(/^#/, '')}
+        exact
+        path={[config.login.url, config.login.next_url]}
+        component={LoginModal}
+      />
+      <Route
+        exact
+        path={[config.signup.url, config.signup.next_url]}
         component={SignupModal}
       />
     </>

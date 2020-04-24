@@ -9,6 +9,9 @@ import Home from './screens/Home'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import AuthRoutes from './auth/Routes'
+import auth_config from './auth/config'
+
+auth_config.login_redirect = '/images/'
 
 const App = () => {
   return (
@@ -18,14 +21,14 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/images/" component={ImageList} />
         <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
+        <AuthRoutes />
+        <Route path="/new/SourceImage/" component={NewSourceImageModal} />
       </BrowserRouter>
       <HashRouter>
         <Route
           path="/party/:sourceimage_id/:partyimage_id/"
           component={PartyImageModal}
         />
-        <Route path="/new/SourceImage/" component={NewSourceImageModal} />
-        <AuthRoutes />
       </HashRouter>
       <Footer />
     </div>
