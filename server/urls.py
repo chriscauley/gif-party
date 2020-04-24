@@ -20,20 +20,17 @@ urlpatterns = [
     path("api/auth/register/", nopass_create),
     re_path('^(?:image|images|login|logout|signup|new)/', unrest_views.index),
     re_path('^$', unrest_views.index),
-
-
     path("api/user.json", unrest_views.user_json),
     path('api/login/', user_views.login_ajax),
     path('api/signup/', user_views.signup_ajax),
     path('api/logout/', user_views.logout_ajax),
 ]
 
-if settings.DEBUG: # pragma: no cover
+if settings.DEBUG:  # pragma: no cover
     from django.views.static import serve
     urlpatterns += [
-        re_path(
-            r'^media/(?P<path>.*)$',
-            serve,
-            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}
-        ),
+        re_path(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+            'show_indexes': True
+        }),
     ]

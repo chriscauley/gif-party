@@ -7,8 +7,8 @@ from subprocess import Popen, PIPE
 # flagstr - the "flag string" used to save PartyImages under like -n12-d6-f3-h-Ngreen
 # flagkwargs - PartyImage flags as a dict
 
-N_FRAMES=7
-DELAY=12
+N_FRAMES = 7
+DELAY = 12
 
 
 def clean_flagkwargs(flagkwargs):
@@ -41,6 +41,7 @@ for field in PARTY_FIELDS:
         continue
     FLAG_TO_FIELD[field[0]] = field
 
+
 def flagstr_to_dict(flagstr):
     out = {}
     for flag_pair in flagstr.split('-'):
@@ -55,6 +56,7 @@ def flagstr_to_dict(flagstr):
             raise NotImplementedError()
         out['method'] = 'replace_color'
     return out
+
 
 def run(args):
     process = Popen(args, stdout=PIPE, stderr=PIPE)
@@ -95,22 +97,18 @@ def get_args(data):
 
 
 def get_n_frames(path):
-    return len(run(['identify',path]).strip().split('\n'))
+    return len(run(['identify', path]).strip().split('\n'))
 
 
 def get_colors(path):
     # get raw histogram
-    histogram = run(['convert',path,"+dither",'-format','%c','histogram:info:'])
+    histogram = run(['convert', path, "+dither", '-format', '%c', 'histogram:info:'])
 
     # trim whitespace, remove empty lines
     histogram = [l.strip() for l in histogram.split('\n') if l]
 
     # sort by most occurrence
-    histogram = sorted(
-        histogram,
-        key=lambda s: int(s.split(':')[0]),
-        reverse=True
-    )
+    histogram = sorted(histogram, key=lambda s: int(s.split(':')[0]), reverse=True)
 
     # ignore zero alpha
     histogram = [l for l in histogram if not ',  0)' in l]

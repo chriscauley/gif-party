@@ -6,10 +6,7 @@ DEBUG = True
 SITE_ID = 1
 SECRET_KEY = 'n9)&^*bb+ey^)5kd(uc0@*z4=*=$agdq%c^_22xs+d@3hhgd7b'
 
-ALLOWED_HOSTS = [
-    'gtfo.party'
-]
-
+ALLOWED_HOSTS = ['gtfo.party']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -42,7 +39,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -52,7 +48,6 @@ DATABASES = {
         "NAME": "gtfo.party",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -69,7 +64,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -82,7 +76,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

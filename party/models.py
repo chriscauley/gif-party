@@ -13,6 +13,7 @@ from party import utils
 
 _choices = lambda a: tuple(zip(a, a))
 
+
 class PartyImage(BaseModel):
     NEGATE_CHANNEL_CHOICES = _choices(['red', 'green', 'blue'])
     N_FRAMES_CHOICES = _choices([7, 12, 18])
@@ -59,7 +60,7 @@ class PartyImage(BaseModel):
     @staticmethod
     def get_from_dict(sourceimage_id, kwargs):
         kwargs = utils.clean_flagkwargs(kwargs)
-        partyimage, new  = PartyImage.objects.get_or_create(sourceimage_id=sourceimage_id, **kwargs)
+        partyimage, new = PartyImage.objects.get_or_create(sourceimage_id=sourceimage_id, **kwargs)
         return partyimage
 
     def party(self):
@@ -73,18 +74,20 @@ class PartyImage(BaseModel):
         output_path = os.path.join(settings.MEDIA_ROOT, '.party', output_root, argstr, output_filename)
         if not os.path.exists(output_path):
             raise NotImplementedError(f"party gif failed to save at {output_path}\nstdout:\n{party_stdout}")
-        self.src = output_path.split(settings.MEDIA_ROOT+"/")[1]
+        self.src = output_path.split(settings.MEDIA_ROOT + "/")[1]
         self.save()
+
 
 class SourceImage(BaseModel):
     class Meta:
-        ordering = ("name",)
+        ordering = ("name", )
+
     VISIBILITY_CHOICES = _choices([
-        'needs_review', # needs review
-        'private', # hidden by uploader
-        'public', # bisible for everyone
-        'hidden', # by mods
-        'trash', # should be deleted
+        'needs_review',  # needs review
+        'private',  # hidden by uploader
+        'public',  # bisible for everyone
+        'hidden',  # by mods
+        'trash',  # should be deleted
     ])
     name = models.CharField(max_length=32)
     src = models.ImageField(upload_to="source_images")
@@ -100,12 +103,12 @@ class SourceImage(BaseModel):
     def __str__(self):
         return self.name
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         self.n_frames = utils.get_n_frames(self.src.path)
         self.colors = utils.get_colors(self.src.path)
         if not self.name:
             self.name = slugify(".".join(self.filename.split('.')[:-1]))
-        super().save(*args,**kwargs)
+        super().save(*args, **kwargs)
 
     @property
     def filename(self):
@@ -126,7 +129,7 @@ class SourceImage(BaseModel):
             variant_path = '/'.join(partyimage.src.path.split('/')[:-1])
             root_url = '/'.join(src_url.split('/')[:-1])
             steps = sorted(os.listdir(variant_path))
-            steps = [s for s in steps if os.path.isdir(os.path.join(variant_path,s))]
+            steps = [s for s in steps if os.path.isdir(os.path.join(variant_path, s))]
             results.append({
                 'id': partyimage.id,
                 'name': partyimage.name,

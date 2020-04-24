@@ -16,20 +16,24 @@ from party import utils
 def sourceimage_list(request):
     attrs = ['name', 'id', 'src']
     results = [si.to_json(attrs) for si in SourceImage.objects.all()]
-    return JsonResponse({ 'results': results })
+    return JsonResponse({'results': results})
+
 
 def sourceimage_detail(request, object_id):
     attrs = ['name', 'id', 'src', 'colors', 'variants', 'n_frames']
     result = get_object_or_404(SourceImage, id=object_id).to_json(attrs)
     return JsonResponse(result)
 
+
 def partyimage_schema(request):
     schema = form_to_schema(PartyImageForm(None))
     return JsonResponse({'schema': schema})
 
+
 def sourceimage_schema(request):
     schema = form_to_schema(SourceImageForm())
     return JsonResponse({'schema': schema, 'post_url': '/api/SourceImage/'})
+
 
 def post_partyimage(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
@@ -41,6 +45,7 @@ def post_partyimage(request):
     # move most this into PartyImage or PartyImageForm
     partyimage = form.save()
     return JsonResponse({})
+
 
 @login_required
 def post_sourceimage(request):
