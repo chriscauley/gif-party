@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from .admin import render_src_img
+from .utils import PartyUtilsTestCase
+from party.admin import render_src_img
 
 class E:
     pass
