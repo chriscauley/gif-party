@@ -1,14 +1,14 @@
 import React from 'react'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 
 import css from '@unrest/css'
 import Form, { post } from '@unrest/react-jsonschema-form'
 
 import config from './config'
-import withUser from './withUser'
+import withAuth from './withAuth'
 
 class BaseModal extends React.Component {
   state = {
-    slug: 'login',
     error: '',
   }
   getOptions = () => {
@@ -21,11 +21,8 @@ class BaseModal extends React.Component {
     )
   }
   onSuccess = () => {
-    this.props.api.refetch()
-    const { hash } = window.location
-    if (hash === config.login.url || config.signup.url) {
-      window.location.hash = ''
-    }
+    this.props.auth.refetch()
+    this.props.history.replace(this.getNext() || config.login_redirect)
   }
 
   render() {
@@ -45,7 +42,7 @@ class BaseModal extends React.Component {
   }
 }
 
-const Modal = withUser(BaseModal)
+const Modal = withRouter(withAuth(BaseModal))
 
 export default Modal
 

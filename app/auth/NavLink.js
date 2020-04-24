@@ -3,7 +3,7 @@ import React from 'react'
 import css from '@unrest/css'
 
 import config from './config'
-import withUser from './withUser'
+import withAuth from './withAuth'
 
 const dropdown = css.CSS({
   shelf: 'border p-4 absolute right-0 top-100 bg-white min-w-full z-10',
@@ -34,16 +34,17 @@ class UserDropdown extends React.Component {
   }
 }
 
-export default withUser((props) => {
-  const { user, refetch } = props.api
+export default withAuth((props) => {
+  const { user, refetch } = props.auth
+  const next = (slug) => config.makeUrl(slug, window.location.pathname)
   return user ? (
     <UserDropdown user={user} refetch={refetch} />
   ) : (
     <>
-      <a href={config.login.url} className={css.button.light()}>
+      <a href={next('login')} className={css.button.light()}>
         Login
       </a>
-      <a href={config.signup.url} className={css.button.light()}>
+      <a href={next('signup')} className={css.button.light()}>
         Sign Up
       </a>
     </>
