@@ -954,6 +954,23 @@
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
 
+"@unrest/css@chriscauley/unrest-css":
+  version "0.0.1"
+  resolved "https://codeload.github.com/chriscauley/unrest-css/tar.gz/f85bdab641d59acc7bde445b412243c173cea03b"
+
+"@unrest/react-jsonschema-form@chriscauley/unrest-react-jsonschema-form":
+  version "0.0.1"
+  resolved "https://codeload.github.com/chriscauley/unrest-react-jsonschema-form/tar.gz/80e90fad2d1481bcb39ace82a47dbb5027c23df5"
+  dependencies:
+    "@unrest/css" chriscauley/unrest-css
+
+"@unrest/react-rest-hook@chriscauley/unrest-react-rest-hook":
+  version "1.0.0"
+  resolved "https://codeload.github.com/chriscauley/unrest-react-rest-hook/tar.gz/2d624383125e357416f84f721c6b7bec871418a7"
+  dependencies:
+    lodash "^4.17.15"
+    use-global-hook "^0.1.12"
+
 "@unrest/tailwind@chriscauley/unrest-tailwindcss":
   version "0.0.1"
   resolved "https://codeload.github.com/chriscauley/unrest-tailwindcss/tar.gz/118c979f530a16b1848d1c146f5802fd7bae38fa"
@@ -4587,7 +4604,7 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4683,29 +4700,23 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
+react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.9.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-jsonschema-form@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/react-jsonschema-form/-/react-jsonschema-form-1.8.1.tgz#9c962f29a55b3fe071d8edf2fc3430f05f1b7ed9"
-  integrity sha512-aaDloxNAcGXOOOcdKOxxqEEn5oDlPUZgWcs8unXXB9vjBRgCF8rCm/wVSv1u2G5ih0j/BX6Ewd/WjI2g00lPdg==
+react-jsonschema-form@2.0.0-alpha.1:
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-jsonschema-form/-/react-jsonschema-form-2.0.0-alpha.1.tgz#385802d483dbc425091e70ad30ab6550900f9e67"
+  integrity sha512-AYpV2/dKMSNwddzrBCJjuGdbZ5jd6mD17f3tq3dzWXiK1lwb0H485u80VlKuiyvTosaMjwWtyvXhO7jXtUu7oA==
   dependencies:
     "@babel/runtime-corejs2" "^7.4.5"
     ajv "^6.7.0"
     core-js "^2.5.7"
     lodash "^4.17.15"
-    prop-types "^15.5.8"
-    react-is "^16.8.4"
-    react-lifecycles-compat "^3.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.9.0"
     shortid "^2.2.14"
-
-react-lifecycles-compat@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
-  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 react-router-dom@^5.1.2:
   version "5.1.2"
