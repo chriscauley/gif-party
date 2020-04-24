@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+
+FILE=/tmp/gif-party.pid
+# reset server
+if kill -HUP `cat $FILE`; then
+    echo rebooted via hup
+else
+    echo server was not running but it is now
+    tmux new-session -s gtfo -d 'source .venv/bin/activate; uwsgi --ini server/uwsgi.ini; bash -i'
+fi

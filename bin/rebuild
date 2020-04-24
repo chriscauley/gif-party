@@ -22,11 +22,4 @@ pip install -r requirements.txt
 yarn parcel build app/index.html --public-url /static/
 python manage.py collectstatic --no-input
 
-FILE=/tmp/gif-party.pid
-# reset server
-if kill -HUP `cat $FILE`; then
-    echo rebooted via hup
-else
-    echo restarting
-    tmux new-session -s gtfo.party uwsgi --ini server/uwsgi.ini
-fi
+./bin/restart
