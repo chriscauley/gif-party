@@ -1,0 +1,4 @@
+*migrations/*
+unrest/*
+.venv/*
+_scripts/*

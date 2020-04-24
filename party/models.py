@@ -94,14 +94,6 @@ class SourceImage(BaseModel):
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     @property
-    def as_json(self):
-        keys = ['id', 'name', 'colors', 'n_frames']
-        return {
-            **{ key: getattr(self,key) for key in keys },
-            'src': self.src.url,
-        }
-
-    @property
     def is_animated(self):
         return self.n_frames > 1
 
