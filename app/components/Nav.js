@@ -1,19 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import AuthNavLink from '../auth/NavLink'
+import css from '@unrest/css'
 
 export default function Nav() {
   return (
-    <header className="navbar p-4 flex justify-between items-center bg-gray-100">
-      <section className="navbar-section">
+    <header className={css.nav.outer()}>
+      <section className={css.nav.section()}>
         <Link
           to="/images/"
-          className="navbar-brand mr-2 font-bold text-blue-700 text-3xl"
+          className={css.nav.brand()}
         >
           GTFO.party
         </Link>
       </section>
-      <section className="navbar-section">
+      <section className={css.nav.section()}>
         <AuthNavLink />
       </section>
     </header>

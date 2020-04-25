@@ -7,7 +7,7 @@
   "license": "MIT",
   "source": true,
   "scripts": {
-    "develop": "parcel app/index.html -p 8596 --public-url /static/ --no-hmr",
+    "develop": "parcel app/index.html -p 8479 --public-url /static/ --no-hmr",
     "lint": "yarn eslint app"
   },
   "repository": {
