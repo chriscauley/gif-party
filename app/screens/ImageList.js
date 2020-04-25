@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import RestHook from '@unrest/react-rest-hook'
+import auth from '@unrest/react-auth'
 import css from '@unrest/css'
 
 import ImageCard from '../components/ImageCard'
 import Form, { post } from '@unrest/react-jsonschema-form'
-import loginRequired from '../auth/loginRequired'
 
 const withSourceImages = RestHook('/api/server/SourceImage/')
 
@@ -61,6 +61,6 @@ const BaseNewSourceImageModal = (props) => {
   )
 }
 
-export const NewSourceImageModal = loginRequired(
+export const NewSourceImageModal = auth.loginRequired(
   withSourceImageSchema(BaseNewSourceImageModal),
 )

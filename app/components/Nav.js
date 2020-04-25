@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import AuthNavLink from '../auth/NavLink'
+import auth from '@unrest/react-auth'
 import css from '@unrest/css'
 
 export default function Nav() {
@@ -15,7 +15,7 @@ export default function Nav() {
         </Link>
       </section>
       <section className={css.nav.section()}>
-        <AuthNavLink />
+        <auth.AuthNavLink />
       </section>
     </header>
   )

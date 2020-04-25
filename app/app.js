@@ -8,10 +8,9 @@ import PartyImageModal from './screens/PartyImageDetail/Modal'
 import Home from './screens/Home'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
-import AuthRoutes from './auth/Routes'
-import auth_config from './auth/config'
+import auth from '@unrest/react-auth'
 
-auth_config.login_redirect = '/images/'
+auth.config.login_redirect = '/images/'
 
 const App = () => {
   return (
@@ -21,7 +20,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/images/" component={ImageList} />
         <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
-        <AuthRoutes />
+        <auth.AuthRoutes />
         <Route path="/new/SourceImage/" component={NewSourceImageModal} />
       </BrowserRouter>
       <HashRouter>
