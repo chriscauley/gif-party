@@ -13,7 +13,7 @@ const config = {
   login: {
     url: '/login/',
     next_url: '/login/:next',
-    post_url: '/api/login/',
+    post_url: '/api/auth/login/',
     schema: {
       title: 'Login To Continue',
       ...schema,
@@ -22,7 +22,7 @@ const config = {
   signup: {
     url: '/signup/',
     next_url: '/signup/:next',
-    post_url: '/api/signup/',
+    post_url: '/api/auth/signup/',
     schema: {
       title: 'Signup To Continue',
       ...schema,
@@ -30,7 +30,7 @@ const config = {
   },
   logout: {
     url: '/logout/',
-    post_url: '/api/logout/',
+    post_url: '/api/auth/logout/',
   },
 }
 
