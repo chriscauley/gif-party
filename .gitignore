@@ -13,6 +13,7 @@ __pycache__
 trash
 .DS_Store
 unrest
+ur
 server/settings/local.py
 _scripts
 .coverage
