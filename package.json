@@ -7,8 +7,8 @@
   "license": "MIT",
   "source": true,
   "scripts": {
-    "develop": "parcel app/index.html -p 8479 --public-url /static/ --no-hmr",
-    "lint": "yarn eslint app"
+    "develop": "parcel client/index.html -p 8479 --public-url /static/ --no-hmr",
+    "lint": "yarn eslint client"
   },
   "repository": {
     "type": "git",
