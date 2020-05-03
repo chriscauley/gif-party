@@ -61,6 +61,6 @@ const BaseNewSourceImageModal = (props) => {
   )
 }
 
-export const NewSourceImageModal = auth.loginRequired(
+export const NewSourceImageModal = auth.required(
   withSourceImageSchema(BaseNewSourceImageModal),
 )
