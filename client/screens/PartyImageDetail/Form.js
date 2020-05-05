@@ -1,7 +1,8 @@
 import React from 'react'
 import { cloneDeep } from 'lodash'
 import RestHook from '@unrest/react-rest-hook'
-import Form, { post } from '@unrest/react-jsonschema-form'
+import Form from '@unrest/react-jsonschema-form'
+import { post } from '@unrest/core'
 import classnames from 'classnames'
 
 const withPartyImageSchema = RestHook('/api/schema/PartyImage/')

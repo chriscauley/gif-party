@@ -5,7 +5,8 @@ import auth from '@unrest/react-auth'
 import css from '@unrest/css'
 
 import ImageCard from '../components/ImageCard'
-import Form, { post } from '@unrest/react-jsonschema-form'
+import Form from '@unrest/react-jsonschema-form'
+import { post } from '@unrest/core'
 
 const withSourceImages = RestHook('/api/server/SourceImage/')
 

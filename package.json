@@ -5,7 +5,6 @@
   "main": "index.html",
   "author": "chriscauley <chris@lablackey.com>",
   "license": "MIT",
-  "source": true,
   "scripts": {
     "develop": "parcel client/index.html -p 8479 --public-url /static/ --no-hmr",
     "lint": "yarn eslint client"
@@ -18,6 +17,7 @@
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.5",
+    "@unrest/core": "chriscauley/unrest-core",
     "@unrest/css": "chriscauley/unrest-css",
     "@unrest/react-jsonschema-form": "chriscauley/unrest-react-jsonschema-form",
     "@unrest/react-rest-hook": "chriscauley/unrest-react-rest-hook",

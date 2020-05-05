@@ -7,10 +7,7 @@ export default function Nav() {
   return (
     <header className={css.nav.outer()}>
       <section className={css.nav.section()}>
-        <Link
-          to="/images/"
-          className={css.nav.brand()}
-        >
+        <Link to="/images/" className={css.nav.brand()}>
           GTFO.party
         </Link>
       </section>
