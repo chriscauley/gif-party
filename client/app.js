@@ -20,7 +20,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/images/" component={ImageList} />
         <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
-        <auth.AuthRoutes />
+        <auth.Routes />
         <Route path="/new/SourceImage/" component={NewSourceImageModal} />
       </BrowserRouter>
       <HashRouter>

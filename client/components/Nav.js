@@ -12,7 +12,7 @@ export default function Nav() {
         </Link>
       </section>
       <section className={css.nav.section()}>
-        <auth.AuthNavLink />
+        <auth.NavLink />
       </section>
     </header>
   )
