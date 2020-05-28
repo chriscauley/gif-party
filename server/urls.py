@@ -14,7 +14,8 @@ urlpatterns = [
     path('api/PartyImage/', party.views.post_partyimage),
     path('api/schema/SourceImage/', party.views.sourceimage_schema),
     path('api/SourceImage/', party.views.post_sourceimage),
-    re_path('^(?:image|images|login|new)/', spa),
+    re_path('', include('social_django.urls', namespace='social')),
+    re_path('^(?:image|images|new|login)/', spa),
     re_path('', include('unrest.urls')),
 ]
 
