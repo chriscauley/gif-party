@@ -85,7 +85,7 @@ class SourceImage(BaseModel):
     VISIBILITY_CHOICES = _choices([
         'needs_review',  # needs review
         'private',  # hidden by uploader
-        'public',  # bisible for everyone
+        'public',  # visible for everyone
         'hidden',  # by mods
         'trash',  # should be deleted
     ])

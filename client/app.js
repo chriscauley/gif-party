@@ -19,14 +19,16 @@ auth.config.social = [
 
 const App = () => {
   return (
-    <div className="container mx-auto">
+    <>
       <BrowserRouter>
         <Nav />
-        <Route exact path="/" component={Home} />
-        <Route path="/images/" component={ImageList} />
-        <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
-        <auth.Routes />
-        <Route path="/new/SourceImage/" component={NewSourceImageModal} />
+        <div className="app-content">
+          <Route exact path="/" component={Home} />
+          <Route path="/images/" component={ImageList} />
+          <Route path="/image/:sourceimage_id/" component={PartyImageDetail} />
+          <auth.Routes />
+          <Route path="/new/SourceImage/" component={NewSourceImageModal} />
+        </div>
       </BrowserRouter>
       <HashRouter>
         <Route
@@ -35,7 +37,7 @@ const App = () => {
         />
       </HashRouter>
       <Footer />
-    </div>
+    </>
   )
 }
 
