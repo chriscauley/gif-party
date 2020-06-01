@@ -118,8 +118,7 @@ class SourceImage(BaseModel):
     def _variant_path(self):
         return os.path.join(settings.MEDIA_ROOT, ".party", self.filename)
 
-    @property
-    def variants(self):
+    def get_variants_for_user(self, user):
         # TODO takes about 1us per variant
         # should probably cache this in redis to avoid having all these directory reads
         results = []
@@ -142,3 +141,9 @@ class SourceImage(BaseModel):
                 **partyimage.to_json(utils.PARTY_FIELDS)
             })
         return results
+
+def get_visible_source_images(user):
+    by_user = models.Q(uploaded_by=user.id)
+    is_public = models.Q(visibility='public')
+    sourceimages = SourceImage.objects.filter(by_user | is_public)
+    return sourceimages

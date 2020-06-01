@@ -5,23 +5,26 @@ from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from unrest.decorators import login_required
+from unrest.pagination import paginate
 from unrest.schema import form_to_schema
 from unrest.views import superuser_api_view
 
 from party.forms import PartyImageForm, SourceImageForm
-from party.models import SourceImage
+from party.models import SourceImage, get_visible_source_images
 from party import utils
 
 
 def sourceimage_list(request):
-    attrs = ['name', 'id', 'src']
-    results = [si.to_json(attrs) for si in SourceImage.objects.all()]
-    return JsonResponse({'results': results})
+    sourceimages = get_visible_source_images(user=request.user)
+    process = lambda i: i.to_json(['name', 'id', 'src'])
+    return JsonResponse(paginate(sourceimages, process=process, **request.GET))
 
 
 def sourceimage_detail(request, object_id):
-    attrs = ['name', 'id', 'src', 'colors', 'variants', 'n_frames']
-    result = get_object_or_404(SourceImage, id=object_id).to_json(attrs)
+    attrs = ['name', 'id', 'src', 'colors', 'n_frames']
+    obj = get_object_or_404(SourceImage, id=object_id)
+    result = obj.to_json(attrs)
+    result['variants'] = obj.get_variants_for_user(request.user)
     return JsonResponse(result)
 
 
