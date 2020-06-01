@@ -1,23 +1,24 @@
+set -e
 if [[ $# -eq 0 ]] ; then
     echo "first argument should be a file"
     exit 0
 fi
 
-OG_SOURCE=$1
-FILENAME=$(basename -- "$1")
-EXT="${FILENAME##*.}"
-FILENAME="${FILENAME%.*}"
+OG_SOURCE=`realpath $1`
+FULLNAME=$(basename -- "$1")
+EXT="${FULLNAME##*.}"
+FILENAME="${FULLNAME%.*}"
 mkdir -p .media/.party/
-ROOT=`realpath .media/.party/`
-mkdir -p $ROOT/$2
-DEST=`realpath $ROOT/$2`
-OUTPUT_FILENAME=party.gif
+ROOT=`realpath $(pwd)`
+DEST=`realpath .media/.party/$2`
+mkdir -p $DEST
+cd $DEST
 shift
 shift
 
 N_FRAMES=7
-COLORS=("#e81d1d" "#e8b71d" "#e3e81d" "#1de840" "#1ddde8" "#2b1de8" "#dd00f3")
 N_COLORS=7
+COLORS=("#e81d1d" "#e8b71d" "#e3e81d" "#1de840" "#1ddde8" "#2b1de8" "#dd00f3")
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -37,9 +38,6 @@ while [ "$1" != "" ]; do
             shift
             DELAY=$1
             ;;
-        -i | --interactive )
-            interactive=1
-            ;;
         -b | --brighten )
             shift
             BRIGHTEN=$1
@@ -56,10 +54,6 @@ while [ "$1" != "" ]; do
             shift
             REPLACE=$1
             ;;
-        -o | --output )
-            shift
-            OUTPUT_FILENAME=$1
-            ;;
         # -h | --help )
         #     usage
         #     exit
@@ -70,107 +64,105 @@ while [ "$1" != "" ]; do
     shift
 done
 
-STEP_COUNT=0
-function _new_dir () {
-    _SC=`printf %02d $STEP_COUNT`
-    DIR="$DEST/${_SC}_$1"
-    mkdir -p $DIR
-    export SOURCE_2="$DIR/$FILENAME.$EXT"
-    let "STEP_COUNT=STEP_COUNT+1"
+function noop() {
+    echo noop $@
 }
 
-rm -rf $DEST
-mkdir -p $DEST
+# STEP_COUNT=0
+function _new_dir () {
+    DIR="$1"
+    shift
 
-_new_dir source
-cp $OG_SOURCE $DIR
-SOURCE="$DIR/$FILENAME.$EXT"
+    # let "STEP_COUNT=STEP_COUNT+1"
+    if [[ ! -d "$DIR" ]];
+    then
+        mkdir -p $DIR
+        pwd
+        $@ "$DIR/$FULLNAME"
+    else
+        : # echo skipping because exists: $@ "$DIR/$FULLNAME"
+    fi
+    SOURCE=$(basename -- "$SOURCE")
+    cd $DIR
+}
 
+SOURCE=$OG_SOURCE
 
 # if it's a multi frame gif, force it to break up
 GIF_N_FRAMES=`identify $SOURCE|wc -l`
 if [ -z "$GIF_SPLIT" ] && [ "$GIF_N_FRAMES" -gt "1" ]
 then
-    echo Forcing gif split
+    _new_dir coalesce convert $SOURCE -coalesce -repage 0x0 +repage
     GIF_SPLIT=1
-    _new_dir coalesce
-    convert $SOURCE -coalesce -repage 0x0 +repage $SOURCE_2
-    SOURCE=$SOURCE_2
-    echo coalesced to remove gif imperfections
+    echo coalesced
 fi
 
 if [ ! -z "$RESIZE" ]
 then
-    _new_dir resize
-    convert $SOURCE -resize $RESIZE $SOURCE_2
-    SOURCE=$SOURCE_2
+    _new_dir resize=$RESIZE convert $SOURCE -resize $RESIZE
     echo resized $RESIZE
 fi
 
 if [ ! -z "$NEGATE" ]
-   then
-       _new_dir negate
-       convert $SOURCE -channel $NEGATE -negate $SOURCE_2
-       SOURCE=$SOURCE_2
-       echo negated $NEGATE
+then
+    _new_dir negate=$NEGATE convert $SOURCE -channel $NEGATE -negate
+    echo negated $NEGATE
 fi
 
 if [ ! -z "$BRIGHTEN" ]
-   then
-       _new_dir brighten
-       convert $SOURCE -modulate $BRIGHTEN% $SOURCE_2
-       SOURCE=$SOURCE_2
-       echo brigtened $BRIGHTEN
+then
+    _new_dir brighten=$BRIGHTEN convert $SOURCE -modulate $BRIGHTEN%
+    echo brigtened $BRIGHTEN
 fi
 
 if [ ! -z "$GIF_SPLIT" ]
 then
-    _new_dir gif_split
-    convert $SOURCE $DIR/$FILENAME-%02d.png
-    GIF_DIR=$DIR
-    SOURCE=`ls $GIF_DIR`
-    set -- `ls $GIF_DIR`
+    echo splitting gif
+    _new_dir gif_split noop
+    convert ../$SOURCE $FILENAME-%04d.png
+    SOURCE=`ls`
+    set -- `ls`
     N_FRAMES=$GIF_N_FRAMES
 
-    # ifno delay, use original
+    # if no delay, use original
     _DELAYS=`identify -format "%T\n" $OG_SOURCE`
-    DELAY=${DELAY:=`bash ave.sh $_DELAYS`}
+    DELAY=${DELAY:=`bash $ROOT/ave.sh $_DELAYS`}
 fi
 
 if [ ! -z "$REPLACE" ]
 then
-    _new_dir replace
-    echo fuzzing $FUZZ%
-    FUZZ=${FUZZ:=6}
-    echo fuzzing $FUZZ%
+    _new_dir replace=$FUZZ noop
 else
-    _new_dir hue_rotate
+    _new_dir hue_rotate=$N_FRAMES noop
 fi
 
 for i in `seq $N_FRAMES`
 do
     HUE=$((200*i/$N_FRAMES))
-    N=`printf %03d $i`
+    N=`printf %04d $i`
     S=$SOURCE
     if [ ! -z "$GIF_SPLIT" ]
     then
-        S=$GIF_DIR/$1
+        S=$1
         shift
     fi
     if [ ! -z "$REPLACE" ]
     then
+        FUZZ=${FUZZ:=6}
+        echo fuzzing $FUZZ%
         _IC=`expr $N % $N_COLORS`
         _COLOR=${COLORS[_IC]}
-        echo $_COLOR $_IC
-        convert $S -fuzz $FUZZ% -fill $_COLOR -opaque "$REPLACE" $DIR/$N.png
+        convert ../$S -fuzz $FUZZ% -fill $_COLOR -opaque "$REPLACE" "$FILENAME__$N.png"
     else
         # "hue_rotate"
-        convert $S -modulate 100,100,$HUE $DIR/$N-$HUE.png
+        convert ../$S -modulate 100,100,$HUE "$FILENAME__$N-$HUE.png"
     fi
 done
 
 DELAY=${DELAY:=4}
 
 # create final gif
-echo delaying gif - $DELAY
-convert -delay $DELAY -dispose previous -loop 0 $DIR/*.png "$DEST/$OUTPUT_FILENAME"
+echo delay $DELAY
+_new_dir gifit noop
+convert -delay $DELAY -dispose previous -loop 0 ../*.png "$FILENAME.gif"
+echo `pwd`/$FULLNAME
