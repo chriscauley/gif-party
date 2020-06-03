@@ -12,9 +12,9 @@ import auth from '@unrest/react-auth'
 
 auth.config.login_redirect = '/images/'
 auth.config.social = [
-  {name: 'GitHub'},
-  {name: 'Twitter'},
-  {name: 'Google', slug: 'google-oauth2'},
+  { name: 'GitHub' },
+  { name: 'Twitter' },
+  { name: 'Google', slug: 'google-oauth2' },
 ]
 
 const App = () => {
