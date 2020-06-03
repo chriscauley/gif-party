@@ -13,6 +13,7 @@ ROOT=`realpath $(pwd)`
 DEST=`realpath .media/.party/$2`
 mkdir -p $DEST
 cd $DEST
+cp $1 $DEST
 shift
 shift
 
@@ -131,8 +132,11 @@ fi
 
 if [ ! -z "$REPLACE" ]
 then
+    FUZZ=${FUZZ:=6}
+    echo replacing $FUZZ%
     _new_dir replace=$FUZZ noop
 else
+    echo hue rotating
     _new_dir hue_rotate=$N_FRAMES noop
 fi
 
@@ -148,11 +152,11 @@ do
     fi
     if [ ! -z "$REPLACE" ]
     then
-        FUZZ=${FUZZ:=6}
-        echo fuzzing $FUZZ%
+        set +e # set -e causes the following to crash on _IC=0...?
         _IC=`expr $N % $N_COLORS`
+        set -e
         _COLOR=${COLORS[_IC]}
-        convert ../$S -fuzz $FUZZ% -fill $_COLOR -opaque "$REPLACE" "$FILENAME__$N.png"
+        convert ../$S -fuzz $FUZZ% -fill "$_COLOR" -opaque "$REPLACE" "$FILENAME__$N.png"
     else
         # "hue_rotate"
         convert ../$S -modulate 100,100,$HUE "$FILENAME__$N-$HUE.png"
@@ -165,4 +169,4 @@ DELAY=${DELAY:=4}
 echo delay $DELAY
 _new_dir gifit noop
 convert -delay $DELAY -dispose previous -loop 0 ../*.png "$FILENAME.gif"
-echo `pwd`/$FULLNAME
+echo `pwd`/"$FILENAME.gif"
