@@ -68,10 +68,9 @@ def run(args):
 
 def partify(src_path, output_root, data, output_filename=None):
     args = get_args(data)
-    dest_dir = output_root + "/" + "".join(args)
     if output_filename:
         args += ['-o', output_filename]
-    return run(['bash', 'gifit.sh', src_path, dest_dir] + args)
+    return run(['bash', 'gifit.sh', src_path, output_root] + args)
 
 
 def get_args(data):

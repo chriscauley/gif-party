@@ -33,12 +33,12 @@ class PartyImage(BaseModel):
     sourceimage = models.ForeignKey("SourceImage", on_delete=models.CASCADE)
 
     @property
-    def name(self):
-        return ''.join(utils.get_args(self.arg_dict))
+    def party_dir(self):
+        return f".party/si_{self.sourceimage_id}"
 
     @property
-    def party_dir(self):
-        return f"{self.sourceimage.filename}/{self.name}"
+    def argstring(self):
+        return ''.join(utils.get_args(self.arg_dict))
 
     @property
     def party_exists(self):
@@ -68,13 +68,12 @@ class PartyImage(BaseModel):
         argstr = ''.join(utils.get_args(self.arg_dict))
         og_name = self.sourceimage.filename
         output_filename = og_name + argstr + '.gif'
-        output_root = f"pi_{self.id}"
 
-        party_stdout = utils.partify(self.sourceimage.src.path, output_root, self.arg_dict, output_filename)
-        output_path = os.path.join(settings.MEDIA_ROOT, '.party', output_root, argstr, output_filename)
+        party_stdout = utils.partify(self.sourceimage.src.path, self.party_dir, self.arg_dict, output_filename)
+        output_path = party_stdout.strip().split('\n')[-1]
         if not os.path.exists(output_path):
-            raise NotImplementedError(f"party gif failed to save at {output_path}\nstdout:\n{party_stdout}")
-        self.src = output_path.split(settings.MEDIA_ROOT + "/")[1]
+            raise NotImplementedError(f"party gif failed to save at {output_path}\nstdout:\n{str(party_stdout)}")
+        self.src = output_path.split(".media/")[1]
         self.save()
 
 
@@ -118,26 +117,33 @@ class SourceImage(BaseModel):
     def _variant_path(self):
         return os.path.join(settings.MEDIA_ROOT, ".party", self.filename)
 
-    def get_variants_for_user(self, user):
+    def get_variants_for_user(self, user=None):
+        _ = lambda s: s.replace("#", "%23")
         # TODO takes about 1us per variant
         # should probably cache this in redis to avoid having all these directory reads
         results = []
-        _ = lambda s: s.replace("#", "%23")
         for partyimage in self.partyimage_set.all():
             src_url = partyimage.src.url
-            variant_path = '/'.join(partyimage.src.path.split('/')[:-1])
-            root_url = '/'.join(src_url.split('/')[:-1])
-            steps = sorted(os.listdir(variant_path))
-            steps = [s for s in steps if os.path.isdir(os.path.join(variant_path, s))]
+            names = partyimage.src.path.split(partyimage.party_dir+"/")[-1].split('/')[:-1]
+            path = os.path.join(settings.MEDIA_ROOT, partyimage.party_dir)
+            url = ''
+            steps = []
+            for name in names:
+                path = os.path.join(path, name)
+                url = os.path.join(url, name)
+                files = [_(s) for s in sorted(os.listdir(path))]
+                files = [f for f in files if not os.path.isdir(os.path.join(path, f))]
+                steps.append({
+                    'name': name,
+                    'path': url,
+                    'files': files,
+                })
             results.append({
                 'id': partyimage.id,
-                'name': partyimage.name,
+                'name': partyimage.argstring,
                 'src': src_url,
-                'root_url': root_url,
-                'steps': [{
-                    'name': step,
-                    'files': [_(s) for s in sorted(os.listdir(os.path.join(variant_path, step)))]
-                } for step in steps],
+                'root_url': settings.MEDIA_URL + partyimage.party_dir,
+                'steps': steps,
                 **partyimage.to_json(utils.PARTY_FIELDS)
             })
         return results

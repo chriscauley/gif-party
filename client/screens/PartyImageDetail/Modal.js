@@ -19,20 +19,16 @@ export default withSourceImage((props) => {
           <div key={step.name}>
             <h2 className={css.h2()}>{step.name}</h2>
             <div className="flex flex-wrap">
-              {step.files.map((fname) => (
+              {step.files.map((fpath) => (
                 <img
                   className="m-4"
-                  src={`${partyimage.root_url}/${step.name}/${fname}`}
-                  key={fname}
+                  src={`${partyimage.root_url}/${step.path}/${fpath}`}
+                  key={fpath}
                 />
               ))}
             </div>
           </div>
         ))}
-        <div>
-          <h2 className={css.h2()}>+gif</h2>
-          <img className="m-4" src={partyimage.src} />
-        </div>
       </div>
     </div>
   )
