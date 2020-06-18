@@ -62,6 +62,8 @@ def run(args):
     process = Popen(args, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     if stderr:
+        print('COMMAND: ', ' '.join(args))
+        print('stdout: ', '\n'.join(stdout))
         raise Exception(stderr.decode("utf-8"))
     return stdout.decode("utf-8")
 
@@ -70,7 +72,8 @@ def partify(src_path, output_root, data, output_filename=None):
     args = get_args(data)
     if output_filename:
         args += ['-o', output_filename]
-    return run(['bash', 'gifit.sh', src_path, output_root] + args)
+    # TODO a redundant .party snuck in somehow, fix this
+    return run(['bash', 'gifit.sh', src_path, output_root.replace('.party/','')] + args)
 
 
 def get_args(data):
