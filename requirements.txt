@@ -1,5 +1,5 @@
 coverage==5.1
-django==2.2.12
+django==2.2.18
 pillow==7.1.1
 psycopg2-binary==2.8.5
 python-social-auth==0.3.6
