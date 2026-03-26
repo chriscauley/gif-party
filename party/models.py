@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.template.defaultfilters import slugify
 from subprocess import Popen, PIPE
@@ -90,7 +89,7 @@ class SourceImage(BaseModel):
     ])
     name = models.CharField(max_length=32)
     src = models.ImageField(upload_to="source_images")
-    colors = JSONField(default=list, blank=True)
+    colors = models.JSONField(default=list, blank=True)
     n_frames = models.IntegerField(default=0)
     visibility = models.CharField(max_length=16, choices=VISIBILITY_CHOICES, default="needs_review")
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

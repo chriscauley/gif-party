@@ -1,11 +1,7 @@
 from django.contrib import admin
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 
 from party.models import SourceImage, PartyImage
-
-
-def render_src_img(self, obj):
-    return mark_safe(f'<img src="{obj.src.url}" width="64" />')
 
 
 @admin.register(SourceImage)
@@ -14,8 +10,10 @@ class SourceImageAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'img', 'visibility', 'created']
     list_editable = ['visibility']
     list_filter = ['visibility']
-    img = render_src_img
-    img.allow_tags = True
+
+    @admin.display(description="Image")
+    def img(self, obj):
+        return format_html('<img src="{}" width="64" />', obj.src.url)
 
 
 @admin.register(PartyImage)
